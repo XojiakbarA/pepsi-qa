@@ -84,7 +84,7 @@ const AnalysisFilters = ({ anchorEl, onClose }) => {
                     name="format_value"
                     label="Format Value"
                     options={formats}
-                    getOptionLabel={option => option.value}
+                    getOptionLabel={option => String(option.value)}
                 />
                 <AutocompleteInput
                     name="container_supplier_name"

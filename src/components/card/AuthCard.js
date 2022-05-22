@@ -6,8 +6,12 @@ import HowToRegIcon from '@mui/icons-material/HowToReg'
 import LoginForm from "../forms/LoginForm"
 import RegisterForm from "../forms/RegisterForm"
 import ResetForm from "../forms/ResetForm"
+import {useSelector} from "react-redux"
+import {userSelector} from "../../store/selectors"
 
-const AuthCard = forwardRef(({...props }, ref) => {
+const AuthCard = forwardRef((props, ref) => {
+
+    const { loading } = useSelector(userSelector)
 
     const [form, setForm] = useState("login")
 
@@ -49,12 +53,14 @@ const AuthCard = forwardRef(({...props }, ref) => {
                 <Stack direction="row" justifyContent="space-between" marginTop={2}>
                     <Button
                         size="small"
+                        disabled={loading}
                         onClick={handleResetClick}
                     >
                         Forgot Password?
                     </Button>
                     <Button
                         size="small"
+                        disabled={loading}
                         onClick={handleRegisterClick}
                     >
                         {buttonText}

@@ -2,9 +2,16 @@ import {Stack, TextField} from "@mui/material"
 import {LoadingButton} from "@mui/lab"
 import PasswordInput from "../input/PasswordInput"
 import {useFormik} from "formik"
+import {useDispatch, useSelector} from "react-redux"
 import {registerValidationSchema} from "../../utils/validate"
+import {register} from "../../store/actionCreators"
+import {userSelector} from "../../store/selectors"
 
 const RegisterForm = () => {
+
+    const dispatch = useDispatch()
+
+    const { loading } = useSelector(userSelector)
 
     const { handleSubmit, getFieldProps, handleChange, handleBlur, errors, touched, values } = useFormik({
         initialValues: {
@@ -17,7 +24,7 @@ const RegisterForm = () => {
         enableReinitialize: true,
         validationSchema: registerValidationSchema,
         onSubmit: (data) => {
-            console.log(data)
+            dispatch(register(data))
         }
     })
 
@@ -67,6 +74,7 @@ const RegisterForm = () => {
                 <LoadingButton
                     variant="contained"
                     type="submit"
+                    loading={loading}
                 >
                     Register
                 </LoadingButton>

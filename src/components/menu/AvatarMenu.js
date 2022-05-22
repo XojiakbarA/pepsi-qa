@@ -1,9 +1,16 @@
 import {useState} from "react"
-import {Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography} from "@mui/material"
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+import {Avatar,  Box,  CircularProgress,  IconButton,  ListItemIcon,  ListItemText,  Menu,  MenuItem,  Tooltip} from "@mui/material"
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
+import LogoutIcon from '@mui/icons-material/Logout'
+import {useDispatch, useSelector} from "react-redux"
+import {logout} from "../../store/actionCreators"
+import {userSelector} from "../../store/selectors"
 
 const AvatarMenu = () => {
+
+    const dispatch = useDispatch()
+
+    const { loading } = useSelector(userSelector)
 
     const [anchorElUser, setAnchorElUser] = useState(null)
 
@@ -13,6 +20,21 @@ const AvatarMenu = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null)
     }
+    const handleLogout = () => {
+        dispatch(logout())
+    }
+
+    const settings = [
+        {
+            title: 'Notifications',
+            icon: <NotificationsNoneIcon/>
+        },
+        {
+            title: 'Logout',
+            icon: loading ? <CircularProgress size={20} color="inherit"/> : <LogoutIcon/>,
+            onClick: handleLogout
+        },
+    ]
 
     return (
         <Box sx={{ flexGrow: 0 }}>
@@ -22,12 +44,11 @@ const AvatarMenu = () => {
                 </IconButton>
             </Tooltip>
             <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
+                id="avatar-menu"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
+                    vertical: 'bottom',
+                    horizontal: 'center',
                 }}
                 keepMounted
                 transformOrigin={{
@@ -37,11 +58,14 @@ const AvatarMenu = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
-                {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                ))}
+                {
+                    settings.map(({title, icon, onClick}) => (
+                        <MenuItem key={title} onClick={onClick}>
+                            <ListItemIcon>{icon}</ListItemIcon>
+                            <ListItemText>{title}</ListItemText>
+                        </MenuItem>
+                    ))
+                }
             </Menu>
         </Box>
     )

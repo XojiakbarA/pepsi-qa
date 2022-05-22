@@ -6,6 +6,7 @@ const RenderTag = ({ value, getTagProps }) => {
 
     return value.map((item, index) => (
                 <Chip
+                    size="small"
                     avatar={item.logo ? <Avatar src={api + item.logo}/> : <ImageNotSupportedIcon/>}
                     key={item.id}
                     label={item.name}

@@ -1,9 +1,13 @@
 import {Stack, TextField} from "@mui/material"
-import {useFormik} from "formik"
-import {resetValidationSchema} from "../../utils/validate"
 import {LoadingButton} from "@mui/lab"
+import {useFormik} from "formik"
+import {useSelector} from "react-redux"
+import {resetValidationSchema} from "../../utils/validate"
+import {userSelector} from "../../store/selectors"
 
 const ResetForm = () => {
+
+    const { loading } = useSelector(userSelector)
 
     const { handleSubmit, getFieldProps, errors, touched } = useFormik({
         initialValues: {
@@ -29,6 +33,7 @@ const ResetForm = () => {
                 <LoadingButton
                     variant="contained"
                     type="submit"
+                    loading={loading}
                 >
                     Send
                 </LoadingButton>

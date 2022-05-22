@@ -2,9 +2,16 @@ import {Checkbox, FormControlLabel, Stack, TextField} from "@mui/material"
 import {LoadingButton} from "@mui/lab"
 import PasswordInput from "../input/PasswordInput"
 import {useFormik} from "formik"
+import {useDispatch, useSelector} from "react-redux"
 import {loginValidationSchema} from "../../utils/validate"
+import {login} from "../../store/actionCreators"
+import {userSelector} from "../../store/selectors"
 
 const LoginForm = () => {
+
+    const dispatch = useDispatch()
+
+    const { loading } = useSelector(userSelector)
 
     const { handleSubmit, handleChange, handleBlur, getFieldProps, values, errors, touched } = useFormik({
         initialValues: {
@@ -15,7 +22,7 @@ const LoginForm = () => {
         enableReinitialize: true,
         validationSchema: loginValidationSchema,
         onSubmit: (data) => {
-            console.log(data)
+            dispatch(login(data))
         }
     })
 
@@ -45,6 +52,7 @@ const LoginForm = () => {
                 <LoadingButton
                     variant="contained"
                     type="submit"
+                    loading={loading}
                 >
                     Login
                 </LoadingButton>

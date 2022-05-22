@@ -1,11 +1,20 @@
-import {Box, Fade, Grid, useMediaQuery} from "@mui/material"
+import {Box, CircularProgress, Fade, Grid, useMediaQuery} from "@mui/material"
+import {Navigate} from "react-router"
 import AuthCard from "../components/card/AuthCard"
+import {useSelector} from "react-redux"
 import pepsiLogo from "../assets/images/pepsi-logo-with-text.png"
 import horizontalPepsiLogo from "../assets/images/pepsi-logo-with-text-horizontal.png"
+import {userSelector} from "../store/selectors"
 
 const Auth = () => {
 
     const isDownMd = useMediaQuery((theme) => theme.breakpoints.down('md'))
+
+    const { auth, getLoading } = useSelector(userSelector)
+
+    if (auth) {
+        return <Navigate to="/"/>
+    }
 
     return (
         <Grid
@@ -42,9 +51,15 @@ const Auth = () => {
                 justifyContent="center"
                 alignItems="center"
             >
-                <Fade in timeout={2000}>
-                    <AuthCard/>
-                </Fade>
+                {
+                    getLoading
+                    ?
+                    <CircularProgress color="error"/>
+                    :
+                    <Fade in timeout={2000}>
+                        <AuthCard/>
+                    </Fade>
+                }
             </Grid>
         </Grid>
     )
