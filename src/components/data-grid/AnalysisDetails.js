@@ -1,4 +1,5 @@
-import {List, ListItem, ListItemSecondaryAction, ListItemText, Popover} from "@mui/material"
+import {IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Popover, Stack} from "@mui/material"
+import CloseIcon from "@mui/icons-material/Close"
 
 const AnalysisDetails = ({ anchorEl, onClose, analysis }) => {
 
@@ -8,7 +9,14 @@ const AnalysisDetails = ({ anchorEl, onClose, analysis }) => {
             open={Boolean(anchorEl)}
             onClose={onClose}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            PaperProps={{ sx: { padding: 1 } }}
         >
+            <Stack direction="row" justifyContent="end">
+                <IconButton size="small" onClick={onClose}>
+                    <CloseIcon fontSize="small"/>
+                </IconButton>
+            </Stack>
             <List dense sx={{ width: 300 }}>
                 <ListItem>
                     <ListItemText>Line Name:</ListItemText>

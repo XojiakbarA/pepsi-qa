@@ -1,9 +1,9 @@
 import axios from "axios"
 
-export const api = "http://localhost:8000/"
+export const baseURL = "http://localhost:8000/"
 
 export const instance = axios.create({
-    baseURL: api,
+    baseURL,
     withCredentials: true
 })
 
@@ -27,8 +27,8 @@ export const fetchCaps = async () => {
     return await instance.get('api/caps')
 }
 
-export const fetchPhysicalChemicalAnalyses = async () => {
-    return await instance.get(`api/physical-chemical-analyses`)
+export const fetchPhysicalChemicalAnalyses = async (params) => {
+    return await instance.get(`api/physical-chemical-analyses`, { params})
 }
 
 export const fetchUser = async () => {

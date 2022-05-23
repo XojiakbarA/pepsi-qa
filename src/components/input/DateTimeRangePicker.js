@@ -2,12 +2,9 @@ import {Stack, TextField} from "@mui/material"
 import {DateTimePicker, LocalizationProvider} from "@mui/x-date-pickers"
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns"
 import enLocale from "date-fns/locale/en-GB"
-import {useState} from "react"
 
 
-const DateTimeRangePicker = () => {
-
-    const [value, setValue] = useState(new Date('2018-01-01T00:00:00.000Z'))
+const DateTimeRangePicker = ({ from, to, onFromChange, onToChange }) => {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enLocale}>
@@ -15,18 +12,14 @@ const DateTimeRangePicker = () => {
                 <DateTimePicker
                     label="From"
                     renderInput={(params) => <TextField variant="standard" {...params} />}
-                    value={value}
-                    onChange={(newValue) => {
-                        setValue(newValue);
-                    }}
+                    value={from}
+                    onChange={onFromChange}
                 />
                 <DateTimePicker
                     label="To"
                     renderInput={(params) => <TextField variant="standard" {...params} />}
-                    value={value}
-                    onChange={(newValue) => {
-                        setValue(newValue);
-                    }}
+                    value={to}
+                    onChange={onToChange}
                 />
             </Stack>
         </LocalizationProvider>

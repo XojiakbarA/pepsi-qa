@@ -1,6 +1,6 @@
 import {ListItemIcon, ListItemText, MenuItem} from "@mui/material"
 import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported"
-import {api} from "../../../api"
+import {baseURL} from "../../../api"
 
 const RenderOption = ({ props, option }) => {
 
@@ -10,7 +10,7 @@ const RenderOption = ({ props, option }) => {
                 {
                     option.logo
                     ?
-                    <img src={api + option.logo} alt="i" width={25}/>
+                    <img src={baseURL + option.logo} alt="i" width={25}/>
                     :
                     <ImageNotSupportedIcon/>
                 }

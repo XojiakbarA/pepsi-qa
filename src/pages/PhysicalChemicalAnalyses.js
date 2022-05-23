@@ -1,10 +1,14 @@
-import {Grid, LinearProgress, Pagination, Stack} from "@mui/material"
+import {CircularProgress, Grid, Pagination, Stack} from "@mui/material"
 import {DataGrid} from "@mui/x-data-grid"
 import ChemicalIcon from "../components/icons/ChemicalIcon"
 import PageTitle from "../components/common/PageTitle"
 import MyGridToolbar from "../components/data-grid/MyGridToolbar"
+import NoResults from "../components/common/NoResults"
+import SelectInput from "../components/input/SelectInput"
 import {useEffect, useState} from "react"
+import {useSearchParams} from "react-router-dom"
 import {fetchPhysicalChemicalAnalyses} from "../api"
+import {createParamsObject} from "../utils/helpers"
 
 const columns = [
     {
@@ -66,17 +70,29 @@ const columns = [
 
 const PhysicalChemicalAnalyses = () => {
 
-    const [analyses, setAnalyses] = useState([])
+    const [params, setParams] = useSearchParams()
+    const [analyses, setAnalyses] = useState({data: [], meta: {}, loading: false})
 
     useEffect(() => {
         const getAnalyses = async () => {
-            const res = await fetchPhysicalChemicalAnalyses()
+            setAnalyses(prev => ({ ...prev, loading: true }))
+            const res = await fetchPhysicalChemicalAnalyses(createParamsObject(params))
             if (res.status === 200) {
-                setAnalyses(res.data.data)
+                setAnalyses({ data: res.data.data, meta: res.data.meta, loading: false })
             }
         }
         getAnalyses()
-    }, [])
+    }, [params])
+
+    const handlePageChange = (e, page) => {
+        const prevParams = createParamsObject(params)
+        setParams({ ...prevParams, page })
+    }
+    const handlePerPageChange = (e) => {
+        const per_page = e.target.value
+        const prevParams = createParamsObject(params)
+        setParams({ ...prevParams, per_page, page: 1 })
+    }
 
     return (
         <Grid container spacing={2}>
@@ -89,7 +105,15 @@ const PhysicalChemicalAnalyses = () => {
             <Grid item xs={12}>
                 <Stack spacing={2}>
                 {
-                    analyses.map(analysis => (
+                    analyses.loading
+                    ?
+                    <CircularProgress/>
+                    :
+                    !analyses.data.length
+                    ?
+                    <NoResults/>
+                    :
+                    analyses.data.map(analysis => (
                         <DataGrid
                             key={analysis.id}
                             autoHeight
@@ -98,8 +122,7 @@ const PhysicalChemicalAnalyses = () => {
                             hideFooter
                             density="compact"
                             components={{
-                                Toolbar: MyGridToolbar,
-                                LoadingOverlay: LinearProgress
+                                Toolbar: MyGridToolbar
                             }}
                             columns={columns}
                             rows={analysis.values}
@@ -110,7 +133,23 @@ const PhysicalChemicalAnalyses = () => {
                 </Stack>
             </Grid>
             <Grid item xs={12} display="flex" justifyContent="flex-end">
-                <Pagination count={10} color="primary"/>
+                {
+                    !analyses.loading && !!analyses.data.length
+                    &&
+                    <Stack direction="row" spacing={2} alignItems="center">
+                        <SelectInput
+                            perPage={params.get('per_page') || 5}
+                            options={[5, 10, 20]}
+                            onChange={handlePerPageChange}
+                        />
+                        <Pagination
+                            count={analyses.meta.last_page}
+                            color="primary"
+                            page={Number(params.get('page')) || 1}
+                            onChange={handlePageChange}
+                        />
+                    </Stack>
+                }
             </Grid>
         </Grid>
     )

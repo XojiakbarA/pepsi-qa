@@ -2,13 +2,9 @@ import {Autocomplete} from "@mui/material"
 import RenderInput from "./RenderInput"
 
 const AutocompleteInput = ({
-   name, label, loading, option, options, getOptionLabel,
-   renderOption, renderTag
+   name, label, loading, value, options, getOptionLabel,
+   renderOption, renderTag, onChange
 }) => {
-
-    const handleChange = (e, v) => {
-        // console.log(v)
-    }
 
     return (
         <Autocomplete
@@ -18,8 +14,8 @@ const AutocompleteInput = ({
             options={options}
             getOptionLabel={getOptionLabel}
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            value={option}
-            onChange={handleChange}
+            value={value}
+            onChange={onChange}
             ChipProps={{ size: 'small' }}
             renderInput={(params) => (
                 <RenderInput
