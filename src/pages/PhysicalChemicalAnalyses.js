@@ -1,4 +1,4 @@
-import {CircularProgress, Grid, Pagination, Stack} from "@mui/material"
+import {CircularProgress, Grid, Pagination, Stack, useMediaQuery} from "@mui/material"
 import {DataGrid} from "@mui/x-data-grid"
 import ChemicalIcon from "../components/icons/ChemicalIcon"
 import PageTitle from "../components/common/PageTitle"
@@ -13,62 +13,75 @@ import {createParamsObject} from "../utils/helpers"
 const columns = [
     {
         flex: 1,
+        minWidth: 80,
         field: 'time',
         headerName: 'Time'
     },
     {
         flex: 1,
+        minWidth: 80,
         field: 'temperature',
         headerName: 'Temperature'
     },
     {
         flex: 1,
+        minWidth: 80,
         field: 'pressure',
         headerName: 'Pressure'
     },
     {
         flex: 1,
+        minWidth: 80,
         field: 'carbonate',
         headerName: 'Carbonate'
     },
     {
         flex: 1,
+        minWidth: 80,
         field: 'brix',
         headerName: 'Brix'
     },
     {
         flex: 1,
+        minWidth: 80,
         field: 'inverted_brix',
         headerName: 'Inverted Brix'
     },
     {
         flex: 1,
+        minWidth: 80,
         field: 'density',
         headerName: 'Density'
     },
     {
         flex: 1,
+        minWidth: 80,
         field: 'acidity',
         headerName: 'Acidity'
     },
     {
         flex: 1,
+        minWidth: 80,
         field: 'ph',
         headerName: 'pH'
     },
     {
         flex: 1,
+        minWidth: 80,
         field: 'fullness',
         headerName: 'Fullness'
     },
     {
         flex: 1,
+        minWidth: 120,
         field: 'checked',
         headerName: 'Checked'
     },
 ]
 
 const PhysicalChemicalAnalyses = () => {
+
+    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
     const [params, setParams] = useSearchParams()
     const [analyses, setAnalyses] = useState({data: [], meta: {}, loading: false})
@@ -136,7 +149,7 @@ const PhysicalChemicalAnalyses = () => {
                 {
                     !analyses.loading && !!analyses.data.length
                     &&
-                    <Stack direction="row" spacing={2} alignItems="center">
+                    <Stack direction={isDownSm ? "column-reverse" : "row"} spacing={2} alignItems={isDownSm ? "start" : "center"}>
                         <SelectInput
                             perPage={params.get('per_page') || 5}
                             options={[5, 10, 20]}

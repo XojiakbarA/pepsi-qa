@@ -14,7 +14,7 @@ const SelectInput = ({ perPage, onChange, options }) => {
                 >
                     {
                         options.map(option => (
-                            <MenuItem key={option} value={option}>{option}</MenuItem>
+                            <MenuItem dense key={option} value={option}>{option}</MenuItem>
                         ))
                     }
                 </Select>

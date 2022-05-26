@@ -30,7 +30,7 @@ const AuthCard = forwardRef((props, ref) => {
         <Card
             ref={ref}
             {...props}
-            sx={{ width: { md: 375 } }}
+            sx={{ width: { xs: "100%", sm: 375 } }}
             elevation={10}
         >
             <CardHeader

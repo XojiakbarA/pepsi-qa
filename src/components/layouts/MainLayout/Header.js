@@ -1,12 +1,13 @@
-import {Toolbar, IconButton, Typography, Button, Box} from "@mui/material"
+import {Toolbar, IconButton, Button, Box, useMediaQuery} from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import {Link} from "react-router-dom"
 import {AppBar} from "./styled"
 import AppLogo from "../../common/AppLogo"
 import AvatarMenu from "../../menu/AvatarMenu"
 
-
 const Header = ({ open, handleMenuClick }) => {
+
+    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
     return (
         <AppBar position="fixed" open={open}>
@@ -16,14 +17,12 @@ const Header = ({ open, handleMenuClick }) => {
                     aria-label="open drawer"
                     onClick={handleMenuClick}
                     edge="start"
-                    sx={{
-                        marginRight: 5,
-                        ...(open && { display: 'none' }),
-                    }}
+                    sx={{ ...(open && { display: 'none' }) }}
                 >
                     <MenuIcon/>
                 </IconButton>
                 <Button
+                    sx={ open && isDownSm && {display: 'none'} }
                     color="inherit"
                     component={Link}
                     to="/"

@@ -1,9 +1,11 @@
-import {Button, Stack, Typography} from "@mui/material"
+import {Button, Stack, Typography, useMediaQuery} from "@mui/material"
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import AnalysisFilters from "./AnalysisFilters"
 import {useState} from "react"
 
 const PageTitle = ({ title, icon }) => {
+
+    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
     const [anchorEl, setAnchorEl] = useState(null)
 
@@ -11,11 +13,12 @@ const PageTitle = ({ title, icon }) => {
         <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Stack direction="row" spacing={2} alignItems="center">
                 {icon}
-                <Typography variant="h4">{title}</Typography>
+                <Typography variant={isDownSm ? 'body1' : 'h5'}>{title}</Typography>
             </Stack>
             <Button
-                startIcon={<FilterAltIcon/>}
+                size={isDownSm ? 'small' : 'medium'}
                 variant="contained"
+                startIcon={<FilterAltIcon/>}
                 onClick={ e => setAnchorEl(e.currentTarget) }
             >
                 Filters

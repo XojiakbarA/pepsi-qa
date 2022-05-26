@@ -5,7 +5,7 @@ const AnalysisTitle = ({ logo, syrup, filled_at }) => {
     return (
         <Stack
             direction="row"
-            spacing={2}
+            spacing={1}
             alignItems="center"
             divider={<Divider orientation="vertical" flexItem/>}
         >
