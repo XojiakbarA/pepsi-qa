@@ -34,6 +34,14 @@ const AnalysisDetails = ({ anchorEl, onClose, analysis }) => {
                     <ListItemText>Cap:</ListItemText>
                     <ListItemSecondaryAction>{ analysis.cap_name }</ListItemSecondaryAction>
                 </ListItem>
+                {
+                    analysis.checked_by
+                    &&
+                    <ListItem>
+                        <ListItemText>Checked By:</ListItemText>
+                        <ListItemSecondaryAction>{ analysis.checked_by }</ListItemSecondaryAction>
+                    </ListItem>
+                }
             </List>
         </Popover>
     )

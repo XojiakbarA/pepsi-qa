@@ -1,8 +1,7 @@
-import {Box, Divider, IconButton, Stack, Tooltip} from "@mui/material"
+import {Box, Divider, IconButton, Stack, Tooltip, Typography} from "@mui/material"
 import { GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import AnalysisDetails from "./AnalysisDetails"
-import AnalysisTitle from "./AnalysisTitle"
 import {useState} from "react"
 import {baseURL} from "../../api"
 
@@ -11,22 +10,29 @@ const MyGridToolbar = ({ analysis }) => {
     const [anchorEl, setAnchorEl] = useState(null)
 
     return (
-        <GridToolbarContainer>
+        <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+            <Box>
             <GridToolbarColumnsButton/>
             <GridToolbarFilterButton/>
             <GridToolbarDensitySelector/>
             <GridToolbarExport/>
-            <Box flexGrow={1}/>
+            </Box>
             <Stack
+                alignSelf="end"
+                alignItems="center"
                 direction="row"
-                spacing={2}
+                spacing={1}
                 divider={<Divider orientation="vertical" flexItem/>}
             >
-                <AnalysisTitle
-                    logo={baseURL + analysis.product_logo}
-                    syrup={ `${analysis.product_name} ${analysis.syrup_id}` }
-                    filled_at={analysis.filled_at}
-                />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                    <img src={baseURL + analysis.product_logo} alt="syrup-logo" width={30}/>
+                    <Typography variant="body2">
+                        {`${analysis.product_name} ${analysis.syrup_id}`}
+                    </Typography>
+                </Stack>
+                <Typography variant="body2">
+                    Checked at: {analysis.checked_at}
+                </Typography>
                 <Tooltip title="More">
                     <IconButton
                         size="small"

@@ -13,8 +13,8 @@ import {Link} from "react-router-dom"
 
 const menu = [
     { title: 'Physical-Chemical Analyses', path: '/physical-chemical-analyses', icon: <ChemicalIcon/> },
-    { title: 'Removal Torque', path: '/removal-torque', icon: <CapIcon/> },
-    { title: 'Section Weight', path: '/section-weight', icon: <BottleIcon/>  },
+    { title: 'Removal Torque', path: '/removal-torque-analyses', icon: <CapIcon/> },
+    { title: 'Section Weight', path: '/section-weight-analyses', icon: <BottleIcon/>  },
 ]
 
 const Sidebar = ({ open, handleCloseClick }) => {

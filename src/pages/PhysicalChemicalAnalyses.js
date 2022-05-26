@@ -1,10 +1,10 @@
-import {CircularProgress, Grid, Pagination, Stack, useMediaQuery} from "@mui/material"
+import {CircularProgress, Grid, Stack} from "@mui/material"
 import {DataGrid} from "@mui/x-data-grid"
 import ChemicalIcon from "../components/icons/ChemicalIcon"
-import PageTitle from "../components/common/PageTitle"
+import PageHeader from "../components/common/PageHeader"
+import PageFooter from "../components/common/PageFooter"
 import MyGridToolbar from "../components/data-grid/MyGridToolbar"
 import NoResults from "../components/common/NoResults"
-import SelectInput from "../components/input/SelectInput"
 import {useEffect, useState} from "react"
 import {useSearchParams} from "react-router-dom"
 import {fetchPhysicalChemicalAnalyses} from "../api"
@@ -74,16 +74,15 @@ const columns = [
     {
         flex: 1,
         minWidth: 120,
-        field: 'checked',
-        headerName: 'Checked'
+        field: 'checked_by',
+        headerName: 'Checked By'
     },
 ]
 
 const PhysicalChemicalAnalyses = () => {
 
-    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
+    const [params] = useSearchParams()
 
-    const [params, setParams] = useSearchParams()
     const [analyses, setAnalyses] = useState({data: [], meta: {}, loading: false})
 
     useEffect(() => {
@@ -97,20 +96,10 @@ const PhysicalChemicalAnalyses = () => {
         getAnalyses()
     }, [params])
 
-    const handlePageChange = (e, page) => {
-        const prevParams = createParamsObject(params)
-        setParams({ ...prevParams, page })
-    }
-    const handlePerPageChange = (e) => {
-        const per_page = e.target.value
-        const prevParams = createParamsObject(params)
-        setParams({ ...prevParams, per_page, page: 1 })
-    }
-
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <PageTitle
+                <PageHeader
                     icon={<ChemicalIcon width={40}/>}
                     title="Physical-Chemical Analyses"
                 />
@@ -145,24 +134,8 @@ const PhysicalChemicalAnalyses = () => {
                 }
                 </Stack>
             </Grid>
-            <Grid item xs={12} display="flex" justifyContent="flex-end">
-                {
-                    !analyses.loading && !!analyses.data.length
-                    &&
-                    <Stack direction={isDownSm ? "column-reverse" : "row"} spacing={2} alignItems={isDownSm ? "start" : "center"}>
-                        <SelectInput
-                            perPage={params.get('per_page') || 5}
-                            options={[5, 10, 20]}
-                            onChange={handlePerPageChange}
-                        />
-                        <Pagination
-                            count={analyses.meta.last_page}
-                            color="primary"
-                            page={Number(params.get('page')) || 1}
-                            onChange={handlePageChange}
-                        />
-                    </Stack>
-                }
+            <Grid item xs={12}>
+                <PageFooter analyses={analyses}  options={[5, 10, 20]}/>
             </Grid>
         </Grid>
     )

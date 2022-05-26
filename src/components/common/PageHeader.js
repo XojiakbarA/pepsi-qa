@@ -3,7 +3,7 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import AnalysisFilters from "./AnalysisFilters"
 import {useState} from "react"
 
-const PageTitle = ({ title, icon }) => {
+const PageHeader = ({ title, icon }) => {
 
     const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
@@ -31,4 +31,4 @@ const PageTitle = ({ title, icon }) => {
     )
 }
 
-export default PageTitle
+export default PageHeader

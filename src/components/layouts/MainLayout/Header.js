@@ -22,7 +22,7 @@ const Header = ({ open, handleMenuClick }) => {
                     <MenuIcon/>
                 </IconButton>
                 <Button
-                    sx={ open && isDownSm && {display: 'none'} }
+                    sx={{display: open && isDownSm ? 'none' : ''}}
                     color="inherit"
                     component={Link}
                     to="/"

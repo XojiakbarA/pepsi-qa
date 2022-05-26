@@ -6,15 +6,16 @@ import RenderLineOption from "../input/AutocompleteInput/RenderLineOption"
 import RenderLineTag from "../input/AutocompleteInput/RenderLineTag"
 import RenderOption from "../input/AutocompleteInput/RenderOption"
 import RenderTag from "../input/AutocompleteInput/RenderTag"
+import RenderUserTag from "../input/AutocompleteInput/RenderUserTag"
 import {useEffect, useState} from "react"
 import {useSearchParams} from "react-router-dom"
-import {fetchCaps, fetchContainerSuppliers, fetchFormats, fetchLines, fetchProducts} from "../../api"
+import {fetchCaps, fetchContainerSuppliers, fetchFormats, fetchLines, fetchProducts, fetchUsers} from "../../api"
 import {createParamsObject} from "../../utils/helpers"
 
 const AnalysisFilters = ({ anchorEl, onClose }) => {
 
-    const [options, setOptions] = useState({ products: [],  lines: [],  formats: [], containers: [], caps: [] })
-    const [values, setValues] = useState({ products: [],  lines: [],  formats: [], containers: [], caps: [] })
+    const [options, setOptions] = useState({ products: [],  lines: [],  formats: [], containers: [], caps: [], users: [] })
+    const [values, setValues] = useState({ products: [],  lines: [],  formats: [], containers: [], caps: [], users: [] })
 
     const [ params, setParams ] = useSearchParams()
 
@@ -40,6 +41,10 @@ const AnalysisFilters = ({ anchorEl, onClose }) => {
             if (caps.status === 200) {
                 setOptions(prev => ({ ...prev, caps: caps.data.data }))
             }
+            const users = await fetchUsers()
+            if (users.status === 200) {
+                setOptions(prev => ({ ...prev, users: users.data.data }))
+            }
         }
         getOptions()
     }, [])
@@ -55,8 +60,9 @@ const AnalysisFilters = ({ anchorEl, onClose }) => {
         const formats = createValue('format_ids', options.formats)
         const containers = createValue('container_supplier_ids', options.containers)
         const caps = createValue('cap_ids', options.caps)
+        const users = createValue('user_ids', options.users)
 
-        setValues(prev => ({ ...prev, products, lines, formats, containers, caps }))
+        setValues(prev => ({ ...prev, products, lines, formats, containers, caps, users }))
     }, [params, options])
 
     const renderLineOption = (props, option) => (
@@ -70,6 +76,9 @@ const AnalysisFilters = ({ anchorEl, onClose }) => {
     )
     const renderProductTag = (value, getTagProps) => (
         <RenderTag value={value} getTagProps={getTagProps}/>
+    )
+    const renderUserTag = (value, getTagProps) => (
+        <RenderUserTag value={value} getTagProps={getTagProps}/>
     )
 
     const handleProductChange = (e, products) => {
@@ -96,6 +105,11 @@ const AnalysisFilters = ({ anchorEl, onClose }) => {
         const cap_ids = caps.map(item => item.id)
         const prevParams = createParamsObject(params)
         setParams({ ...prevParams, cap_ids, page: 1 })
+    }
+    const handleUserChange = (e, users) => {
+        const user_ids = users.map(item => item.id)
+        const prevParams = createParamsObject(params)
+        setParams({ ...prevParams, user_ids, page: 1 })
     }
     const handleFromChange = (value) => {
         const from = value.toJSON()
@@ -166,6 +180,15 @@ const AnalysisFilters = ({ anchorEl, onClose }) => {
                     value={values.caps}
                     onChange={handleCapChange}
                     getOptionLabel={option => option.name}
+                />
+                <AutocompleteInput
+                    name="user_name"
+                    label="Checked By"
+                    options={options.users}
+                    value={values.users}
+                    onChange={handleUserChange}
+                    getOptionLabel={option => `${option.last_name} ${option.first_name}`}
+                    renderTag={renderUserTag}
                 />
                 <DateTimeRangePicker
                     from={params.get('from')}
