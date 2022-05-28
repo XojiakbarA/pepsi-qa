@@ -9,7 +9,7 @@ import CapIcon from "../../icons/CapIcon"
 import BottleIcon from "../../icons/BottleIcon"
 import {Drawer, DrawerHeader} from "./styled"
 import {useTheme} from "@mui/material/styles"
-import {Link} from "react-router-dom"
+import {Link, useLocation} from "react-router-dom"
 
 const menu = [
     { title: 'Physical-Chemical Analyses', path: '/physical-chemical-analyses', icon: <ChemicalIcon/> },
@@ -20,6 +20,8 @@ const menu = [
 const Sidebar = ({ open, handleCloseClick }) => {
 
     const theme = useTheme()
+
+    const location = useLocation()
 
     return (
         <Drawer variant="permanent" open={open}>
@@ -42,6 +44,7 @@ const Sidebar = ({ open, handleCloseClick }) => {
                                 }}
                                 component={Link}
                                 to={path}
+                                selected={path === location.pathname}
                             >
                                 <ListItemIcon
                                     sx={{

@@ -39,6 +39,10 @@ export const fetchRemovalTorqueAnalyses = async (params) => {
     return await instance.get(`api/removal-torque-analyses`, { params })
 }
 
+export const fetchSectionWeightAnalyses = async (params) => {
+    return await instance.get(`api/section-weight-analyses`, { params })
+}
+
 export const fetchUser = async () => {
     return await instance.get('api/auth')
 }

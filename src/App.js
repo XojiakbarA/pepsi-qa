@@ -9,16 +9,20 @@ import SectionWeightAnalyses from "./pages/SectionWeightAnalyses"
 import MySnackbar from "./components/common/MySnackbar"
 import {useEffect} from "react"
 import {useDispatch} from "react-redux"
-import {getUser} from "./store/actionCreators"
+import {getCaps, getContainerSuppliers, getFormats, getLines, getProducts, getUser, getUsers} from "./store/actionCreators"
 
 function App() {
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-
         dispatch(getUser())
-
+        dispatch(getProducts())
+        dispatch(getLines())
+        dispatch(getFormats())
+        dispatch(getContainerSuppliers())
+        dispatch(getCaps())
+        dispatch(getUsers())
     }, [dispatch])
 
     return (

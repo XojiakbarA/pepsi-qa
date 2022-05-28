@@ -1,5 +1,16 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
-import {fetchCsrfCookie, fetchUser, userLogin, userLogout, userRegister} from "../api"
+import {
+    fetchCaps,
+    fetchContainerSuppliers,
+    fetchCsrfCookie,
+    fetchFormats,
+    fetchLines,
+    fetchProducts,
+    fetchUser, fetchUsers,
+    userLogin,
+    userLogout,
+    userRegister
+} from "../api"
 import {setSnackbar} from "./slices/snackbarSlice"
 
 export const getUser = createAsyncThunk('user/getUser',
@@ -69,6 +80,83 @@ export const logout = createAsyncThunk('user/logout',
                 localStorage.removeItem('auth')
                 dispatch(setSnackbar({ data: 'You are logged out!', open: true, color: 'success' }))
                 return null
+            }
+        } catch ({ response }) {
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const getProducts = createAsyncThunk('products/get',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await fetchProducts()
+            if (res.status === 200) {
+                return res.data.data
+            }
+        } catch ({ response }) {
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const getLines = createAsyncThunk('lines/get',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await fetchLines()
+            if (res.status === 200) {
+                return res.data.data
+            }
+        } catch ({ response }) {
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const getFormats = createAsyncThunk('formats/get',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await fetchFormats()
+            if (res.status === 200) {
+                return res.data.data
+            }
+        } catch ({ response }) {
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const getContainerSuppliers = createAsyncThunk('containerSupplier/get',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await fetchContainerSuppliers()
+            if (res.status === 200) {
+                return res.data.data
+            }
+        } catch ({ response }) {
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+export const getCaps = createAsyncThunk('caps/get',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await fetchCaps()
+            if (res.status === 200) {
+                return res.data.data
+            }
+        } catch ({ response }) {
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const getUsers = createAsyncThunk('users/get',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await fetchUsers()
+            if (res.status === 200) {
+                return res.data.data
             }
         } catch ({ response }) {
             return rejectWithValue(response.data.message)
