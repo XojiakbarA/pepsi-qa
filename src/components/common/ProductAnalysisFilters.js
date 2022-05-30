@@ -9,9 +9,9 @@ import RenderTag from "../input/AutocompleteInput/RenderTag"
 import RenderUserTag from "../input/AutocompleteInput/RenderUserTag"
 import {useSearchParams} from "react-router-dom"
 import {useSelector} from "react-redux"
-import {createParamsObject, createValue} from "../../utils/helpers"
+import {createParamsObject, createIDsValue} from "../../utils/helpers"
 
-const AnalysisFilters = ({ anchorEl, onClose }) => {
+const ProductAnalysisFilters = ({ anchorEl, onClose }) => {
 
     const [ params, setParams ] = useSearchParams()
 
@@ -22,91 +22,37 @@ const AnalysisFilters = ({ anchorEl, onClose }) => {
     const caps = useSelector(state => state.caps.data)
     const users = useSelector(state => state.users.data)
 
-    const productValue = createValue('product_ids', products, params)
-    const lineValue = createValue('line_ids', lines, params)
-    const formatValue = createValue('format_ids', formats, params)
-    const containerSupplierValue = createValue('container_supplier_ids', containerSuppliers, params)
-    const capValue = createValue('cap_ids', caps, params)
-    const userValue = createValue('user_ids', users, params)
-
-    const renderLineOption = (props, option) => (
-        <RenderLineOption key={option.id} props={props} option={option}/>
-    )
-    const renderLineTag = (value, getTagProps) => (
-        <RenderLineTag value={value} getTagProps={getTagProps}/>
-    )
-    const renderProductOption = (props, option) => (
-        <RenderOption key={option.id} props={props} option={option}/>
-    )
-    const renderProductTag = (value, getTagProps) => (
-        <RenderTag value={value} getTagProps={getTagProps}/>
-    )
-    const renderUserTag = (value, getTagProps) => (
-        <RenderUserTag value={value} getTagProps={getTagProps}/>
-    )
+    const productValue = createIDsValue('product_ids', products, params)
+    const lineValue = createIDsValue('line_ids', lines, params)
+    const formatValue = createIDsValue('format_ids', formats, params)
+    const containerSupplierValue = createIDsValue('container_supplier_ids', containerSuppliers, params)
+    const capValue = createIDsValue('cap_ids', caps, params)
+    const userValue = createIDsValue('user_ids', users, params)
 
     const handleSyrupNumberChange = (e) => {
         const syrup_id = e.target.value
-        if (syrup_id) setParams({ syrup_id })
-        else setParams({})
-    }
-    const handleFromChange = (value) => {
         const prevParams = createParamsObject(params)
-        delete prevParams.syrup_id
-        if (value) {
-            const from = value.toJSON()
-            setParams({ ...prevParams, from, page: 1 })
+        if (syrup_id) {
+            setParams({ syrup_id })
         } else {
-            delete prevParams.from
+            delete prevParams.syrup_id
             setParams({ ...prevParams })
         }
     }
-    const handleToChange = (value) => {
+    const handleDateChange = (value, field) => {
         const prevParams = createParamsObject(params)
-        delete prevParams.syrup_id
         if (value) {
-            const to = value.toJSON()
-            setParams({ ...prevParams, to, page: 1 })
+            setParams({ ...prevParams, [field]: value.toJSON(), page: 1 })
         } else {
-            delete prevParams.to
+            delete prevParams[field]
             setParams({ ...prevParams })
         }
     }
-    const handleProductChange = (e, products) => {
-        const product_ids = products.map(item => item.id)
+    const handleIDsChange = (value, field) => {
+        const ids = value.map(item => item.id)
         const prevParams = createParamsObject(params)
         delete prevParams.syrup_id
-        setParams({ ...prevParams, product_ids, page: 1 })
-    }
-    const handleLineChange = (e, lines) => {
-        const line_ids = lines.map(item => item.id)
-        const prevParams = createParamsObject(params)
-        delete prevParams.syrup_id
-        setParams({ ...prevParams, line_ids, page: 1 })
-    }
-    const handleFormatChange = (e, formats) => {
-        const format_ids = formats.map(item => item.id)
-        const prevParams = createParamsObject(params)
-        delete prevParams.syrup_id
-        setParams({ ...prevParams, format_ids, page: 1 })
-    }
-    const handleContainerChange = (e, containers) => {
-        const container_supplier_ids = containers.map(item => item.id)
-        const prevParams = createParamsObject(params)
-        delete prevParams.syrup_id
-        setParams({ ...prevParams, container_supplier_ids, page: 1 })
-    }
-    const handleCapChange = (e, caps) => {
-        const cap_ids = caps.map(item => item.id)
-        const prevParams = createParamsObject(params)
-        delete prevParams.syrup_id
-        setParams({ ...prevParams, cap_ids, page: 1 })
-    }
-    const handleUserChange = (e, users) => {
-        const user_ids = users.map(item => item.id)
-        const prevParams = createParamsObject(params)
-        delete prevParams.syrup_id
-        setParams({ ...prevParams, user_ids, page: 1 })
+        setParams({ ...prevParams, [field]: ids, page: 1 })
     }
 
     return (
@@ -139,73 +85,73 @@ const AnalysisFilters = ({ anchorEl, onClose }) => {
                     <DateTimeRangePicker
                         from={params.get('from')}
                         to={params.get('to')}
-                        onFromChange={handleFromChange}
-                        onToChange={handleToChange}
+                        onFromChange={ v => handleDateChange(v, 'from') }
+                        onToChange={ v => handleDateChange(v, 'to') }
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <AutocompleteInput
-                        name="product_name"
-                        label="Product Name"
+                        name="product_ids"
+                        label="Product"
                         options={products}
                         value={productValue}
-                        onChange={handleProductChange}
+                        onChange={(e, v) => handleIDsChange(v, 'product_ids')}
                         getOptionLabel={option => option.name}
-                        renderOption={renderProductOption}
-                        renderTag={renderProductTag}
+                        renderOption={(props, option) => <RenderOption key={option.id} props={props} option={option}/>}
+                        renderTag={(value, getTagProps) => <RenderTag value={value} getTagProps={getTagProps}/>}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <AutocompleteInput
-                        name="line_name"
-                        label="Line Name"
+                        name="line_ids"
+                        label="Line"
                         options={lines}
                         value={lineValue}
-                        onChange={handleLineChange}
+                        onChange={(e, v) => handleIDsChange(v, 'line_ids')}
                         getOptionLabel={option => option.name}
-                        renderOption={renderLineOption}
-                        renderTag={renderLineTag}
+                        renderOption={(props, option) => <RenderLineOption key={option.id} props={props} option={option}/>}
+                        renderTag={(value, getTagProps) => <RenderLineTag value={value} getTagProps={getTagProps}/>}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <AutocompleteInput
-                        name="format_value"
-                        label="Format Value"
+                        name="format_ids"
+                        label="Format"
                         options={formats}
                         value={formatValue}
-                        onChange={handleFormatChange}
+                        onChange={(e, v) => handleIDsChange(v, 'format_ids')}
                         getOptionLabel={option => String(option.value)}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <AutocompleteInput
-                        name="container_supplier_name"
+                        name="container_supplier_ids"
                         label="Container Supplier"
                         options={containerSuppliers}
                         value={containerSupplierValue}
-                        onChange={handleContainerChange}
+                        onChange={(e, v) => handleIDsChange(v, 'container_supplier_ids')}
                         getOptionLabel={option => option.name}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <AutocompleteInput
-                        name="cap_name"
-                        label="Cap Name"
+                        name="cap_ids"
+                        label="Cap"
                         options={caps}
                         value={capValue}
-                        onChange={handleCapChange}
+                        onChange={(e, v) => handleIDsChange(v, 'cap_ids')}
                         getOptionLabel={option => option.name}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <AutocompleteInput
-                        name="user_name"
+                        name="user_ids"
                         label="Checked By"
                         options={users}
                         value={userValue}
-                        onChange={handleUserChange}
+                        onChange={(e, v) => handleIDsChange(v, 'user_ids')}
                         getOptionLabel={option => `${option.last_name} ${option.first_name}`}
-                        renderTag={renderUserTag}
+                        renderTag={(value, getTagProps) => <RenderUserTag value={value} getTagProps={getTagProps}/>}
                     />
                 </Grid>
             </Grid>
@@ -213,4 +159,4 @@ const AnalysisFilters = ({ anchorEl, onClose }) => {
     )
 }
 
-export default AnalysisFilters
+export default ProductAnalysisFilters

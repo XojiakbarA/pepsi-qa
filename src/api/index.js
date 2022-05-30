@@ -43,6 +43,10 @@ export const fetchSectionWeightAnalyses = async (params) => {
     return await instance.get(`api/section-weight-analyses`, { params })
 }
 
+export const fetchWaterAnalyses = async (params) => {
+    return await instance.get(`api/water-analyses`, { params })
+}
+
 export const fetchUser = async () => {
     return await instance.get('api/auth')
 }

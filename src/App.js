@@ -6,6 +6,7 @@ import Home from "./pages/Home"
 import PhysicalChemicalAnalyses from "./pages/PhysicalChemicalAnalyses"
 import RemovalTorqueAnalyses from "./pages/RemovalTorqueAnalyses"
 import SectionWeightAnalyses from "./pages/SectionWeightAnalyses"
+import WaterAnalyses from "./pages/WaterAnalyses"
 import MySnackbar from "./components/common/MySnackbar"
 import {useEffect} from "react"
 import {useDispatch} from "react-redux"
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/physical-chemical-analyses" element={<PhysicalChemicalAnalyses/>}/>
                     <Route path="/removal-torque-analyses" element={<RemovalTorqueAnalyses/>}/>
                     <Route path="/section-weight-analyses" element={<SectionWeightAnalyses/>}/>
+                    <Route path="/water-analyses" element={<WaterAnalyses/>}/>
                 </Route>
             </Route>
             <Route path="/auth" element={<Auth/>}/>

@@ -11,12 +11,12 @@ const MyGridToolbar = ({ analysis }) => {
 
     return (
         <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-            <Box>
-            <GridToolbarColumnsButton/>
-            <GridToolbarFilterButton/>
-            <GridToolbarDensitySelector/>
-            <GridToolbarExport/>
-            </Box>
+            {/*<Box>*/}
+            {/*<GridToolbarColumnsButton/>*/}
+            {/*<GridToolbarFilterButton/>*/}
+            {/*<GridToolbarDensitySelector/>*/}
+            {/*<GridToolbarExport/>*/}
+            {/*</Box>*/}
             <Stack
                 alignSelf="end"
                 alignItems="center"

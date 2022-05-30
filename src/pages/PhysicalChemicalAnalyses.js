@@ -5,10 +5,9 @@ import PageHeader from "../components/common/PageHeader"
 import PageFooter from "../components/common/PageFooter"
 import MyGridToolbar from "../components/data-grid/MyGridToolbar"
 import NoResults from "../components/common/NoResults"
-import {useEffect, useState} from "react"
 import {useSearchParams} from "react-router-dom"
+import {useAnalyses} from "../hooks/useAnalyses"
 import {fetchPhysicalChemicalAnalyses} from "../api"
-import {createParamsObject} from "../utils/helpers"
 
 const columns = [
     {
@@ -83,18 +82,7 @@ const PhysicalChemicalAnalyses = () => {
 
     const [params] = useSearchParams()
 
-    const [analyses, setAnalyses] = useState({data: [], meta: {}, loading: false})
-
-    useEffect(() => {
-        const getAnalyses = async () => {
-            setAnalyses(prev => ({ ...prev, loading: true }))
-            const res = await fetchPhysicalChemicalAnalyses(createParamsObject(params))
-            if (res.status === 200) {
-                setAnalyses({ data: res.data.data, meta: res.data.meta, loading: false })
-            }
-        }
-        getAnalyses()
-    }, [params])
+    const { data, meta, loading } = useAnalyses(params, fetchPhysicalChemicalAnalyses)
 
     return (
         <Grid container spacing={2}>
@@ -107,15 +95,15 @@ const PhysicalChemicalAnalyses = () => {
             <Grid item xs={12}>
                 <Stack spacing={2}>
                 {
-                    analyses.loading
+                    loading
                     ?
                     <CircularProgress/>
                     :
-                    !analyses.data.length
+                    !data.length
                     ?
                     <NoResults/>
                     :
-                    analyses.data.map(analysis => (
+                    data.map(analysis => (
                         <DataGrid
                             key={analysis.id}
                             autoHeight
@@ -135,7 +123,11 @@ const PhysicalChemicalAnalyses = () => {
                 </Stack>
             </Grid>
             <Grid item xs={12}>
-                <PageFooter analyses={analyses}  options={[5, 10, 20]}/>
+                <PageFooter
+                    visible={!loading && !!data.length}
+                    count={meta.last_page}
+                    options={[5, 10, 20]}
+                />
             </Grid>
         </Grid>
     )

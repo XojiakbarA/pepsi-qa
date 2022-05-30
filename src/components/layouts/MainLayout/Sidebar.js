@@ -7,14 +7,16 @@ import MailIcon from "@mui/icons-material/Mail"
 import ChemicalIcon from "../../icons/ChemicalIcon"
 import CapIcon from "../../icons/CapIcon"
 import BottleIcon from "../../icons/BottleIcon"
+import WaterIcon from "../../icons/WaterIcon"
 import {Drawer, DrawerHeader} from "./styled"
 import {useTheme} from "@mui/material/styles"
 import {Link, useLocation} from "react-router-dom"
 
 const menu = [
     { title: 'Physical-Chemical Analyses', path: '/physical-chemical-analyses', icon: <ChemicalIcon/> },
-    { title: 'Removal Torque', path: '/removal-torque-analyses', icon: <CapIcon/> },
-    { title: 'Section Weight', path: '/section-weight-analyses', icon: <BottleIcon/>  },
+    { title: 'Removal Torque Analyses', path: '/removal-torque-analyses', icon: <CapIcon/> },
+    { title: 'Section Weight Analyses', path: '/section-weight-analyses', icon: <BottleIcon/>  },
+    { title: 'Water Analyses', path: '/water-analyses', icon: <WaterIcon/>  },
 ]
 
 const Sidebar = ({ open, handleCloseClick }) => {

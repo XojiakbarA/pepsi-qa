@@ -3,7 +3,7 @@ import SelectInput from "../input/SelectInput"
 import {useSearchParams} from "react-router-dom"
 import {createParamsObject} from "../../utils/helpers"
 
-const PageFooter = ({ analyses, options }) => {
+const PageFooter = ({ visible, count, options }) => {
 
     const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
@@ -22,7 +22,7 @@ const PageFooter = ({ analyses, options }) => {
     return (
         <Box display="flex" justifyContent="flex-end">
             {
-                !analyses.loading && !!analyses.data.length
+                visible
                 &&
                 <Stack
                     spacing={2}
@@ -35,7 +35,7 @@ const PageFooter = ({ analyses, options }) => {
                         onChange={handlePerPageChange}
                     />
                     <Pagination
-                        count={analyses.meta.last_page}
+                        count={count}
                         color="primary"
                         page={Number(params.get('page')) || 1}
                         onChange={handlePageChange}
