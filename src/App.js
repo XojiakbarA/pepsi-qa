@@ -11,6 +11,7 @@ import MySnackbar from "./components/common/MySnackbar"
 import {useEffect} from "react"
 import {useDispatch} from "react-redux"
 import {getCaps, getContainerSuppliers, getFormats, getLines, getProducts, getUser, getUsers} from "./store/actionCreators"
+import SecureSealTests from "./pages/SecureSealTests";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/removal-torque-analyses" element={<RemovalTorqueAnalyses/>}/>
                     <Route path="/section-weight-analyses" element={<SectionWeightAnalyses/>}/>
                     <Route path="/water-analyses" element={<WaterAnalyses/>}/>
+                    <Route path="/secure-seal-tests" element={<SecureSealTests/>}/>
                 </Route>
             </Route>
             <Route path="/auth" element={<Auth/>}/>

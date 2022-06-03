@@ -47,6 +47,10 @@ export const fetchWaterAnalyses = async (params) => {
     return await instance.get(`api/water-analyses`, { params })
 }
 
+export const fetchSecureSealTests = async (params) => {
+    return await instance.get(`api/secure-seal-tests`, { params })
+}
+
 export const fetchUser = async () => {
     return await instance.get('api/auth')
 }

@@ -8,6 +8,7 @@ import ChemicalIcon from "../../icons/ChemicalIcon"
 import CapIcon from "../../icons/CapIcon"
 import BottleIcon from "../../icons/BottleIcon"
 import WaterIcon from "../../icons/WaterIcon"
+import BarometerIcon from "../../icons/BarometerIcon"
 import {Drawer, DrawerHeader} from "./styled"
 import {useTheme} from "@mui/material/styles"
 import {Link, useLocation} from "react-router-dom"
@@ -17,6 +18,7 @@ const menu = [
     { title: 'Removal Torque Analyses', path: '/removal-torque-analyses', icon: <CapIcon/> },
     { title: 'Section Weight Analyses', path: '/section-weight-analyses', icon: <BottleIcon/>  },
     { title: 'Water Analyses', path: '/water-analyses', icon: <WaterIcon/>  },
+    { title: 'Secure Seal Tests', path: '/secure-seal-tests', icon: <BarometerIcon/>  },
 ]
 
 const Sidebar = ({ open, handleCloseClick }) => {
