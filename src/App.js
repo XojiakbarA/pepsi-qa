@@ -12,6 +12,7 @@ import {useEffect} from "react"
 import {useDispatch} from "react-redux"
 import {getCaps, getContainerSuppliers, getFormats, getLines, getProducts, getUser, getUsers} from "./store/actionCreators"
 import SecureSealTests from "./pages/SecureSealTests";
+import BurstTests from "./pages/BurstTests";
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
                     <Route path="/section-weight-analyses" element={<SectionWeightAnalyses/>}/>
                     <Route path="/water-analyses" element={<WaterAnalyses/>}/>
                     <Route path="/secure-seal-tests" element={<SecureSealTests/>}/>
+                    <Route path="/burst-tests" element={<BurstTests/>}/>
                 </Route>
             </Route>
             <Route path="/auth" element={<Auth/>}/>

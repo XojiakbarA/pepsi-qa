@@ -51,6 +51,10 @@ export const fetchSecureSealTests = async (params) => {
     return await instance.get(`api/secure-seal-tests`, { params })
 }
 
+export const fetchBurstTests = async (params) => {
+    return await instance.get(`api/burst-tests`, { params })
+}
+
 export const fetchUser = async () => {
     return await instance.get('api/auth')
 }
