@@ -7,6 +7,7 @@ import PageHeader from "../components/common/PageHeader"
 import PageFooter from "../components/common/PageFooter"
 import NoResults from "../components/common/NoResults"
 import BarometerIcon from "../components/icons/BarometerIcon"
+import ProductAnalysisFilters from "../components/common/ProductAnalysisFilters"
 import {useSearchParams} from "react-router-dom"
 import {useAnalyses} from "../hooks/useAnalyses"
 import {fetchSecureSealTests} from "../api"
@@ -46,6 +47,7 @@ const SecureSealTests = () => {
                 <PageHeader
                     icon={<BarometerIcon width={40}/>}
                     title="Secure Seal Tests"
+                    rightComponent={<ProductAnalysisFilters/>}
                 />
             </Grid>
             <Grid item xs={12}>

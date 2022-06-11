@@ -55,6 +55,10 @@ export const fetchBurstTests = async (params) => {
     return await instance.get(`api/burst-tests`, { params })
 }
 
+export const fetchShifts = async (params) => {
+    return await instance.get(`api/shifts`, { params })
+}
+
 export const fetchUser = async () => {
     return await instance.get('api/auth')
 }

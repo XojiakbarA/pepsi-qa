@@ -5,6 +5,7 @@ import PageHeader from "../components/common/PageHeader"
 import PageFooter from "../components/common/PageFooter"
 import MyGridToolbar from "../components/data-grid/MyGridToolbar"
 import NoResults from "../components/common/NoResults"
+import ProductAnalysisFilters from "../components/common/ProductAnalysisFilters"
 import {useSearchParams} from "react-router-dom"
 import {useAnalyses} from "../hooks/useAnalyses"
 import {fetchPhysicalChemicalAnalyses} from "../api"
@@ -90,6 +91,7 @@ const PhysicalChemicalAnalyses = () => {
                 <PageHeader
                     icon={<ChemicalIcon width={40}/>}
                     title="Physical-Chemical Analyses"
+                    rightComponent={<ProductAnalysisFilters/>}
                 />
             </Grid>
             <Grid item xs={12}>

@@ -7,12 +7,13 @@ import PhysicalChemicalAnalyses from "./pages/PhysicalChemicalAnalyses"
 import RemovalTorqueAnalyses from "./pages/RemovalTorqueAnalyses"
 import SectionWeightAnalyses from "./pages/SectionWeightAnalyses"
 import WaterAnalyses from "./pages/WaterAnalyses"
+import SecureSealTests from "./pages/SecureSealTests"
+import BurstTests from "./pages/BurstTests"
+import ShiftSchedule from "./pages/ShiftSchedule"
 import MySnackbar from "./components/common/MySnackbar"
 import {useEffect} from "react"
 import {useDispatch} from "react-redux"
 import {getCaps, getContainerSuppliers, getFormats, getLines, getProducts, getUser, getUsers} from "./store/actionCreators"
-import SecureSealTests from "./pages/SecureSealTests";
-import BurstTests from "./pages/BurstTests";
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
                     <Route path="/water-analyses" element={<WaterAnalyses/>}/>
                     <Route path="/secure-seal-tests" element={<SecureSealTests/>}/>
                     <Route path="/burst-tests" element={<BurstTests/>}/>
+                    <Route path="/shift-schedule" element={<ShiftSchedule/>}/>
                 </Route>
             </Route>
             <Route path="/auth" element={<Auth/>}/>

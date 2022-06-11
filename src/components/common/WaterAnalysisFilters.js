@@ -1,14 +1,20 @@
-import {Grid, IconButton, Popover, Stack, TextField} from "@mui/material"
+import {Button, Grid, IconButton, Popover, Stack, TextField, useMediaQuery} from "@mui/material"
+import FilterAltIcon from "@mui/icons-material/FilterAlt"
 import CloseIcon from "@mui/icons-material/Close"
 import DateTimeRangePicker from "../input/DateTimeRangePicker"
 import AutocompleteInput from "../input/AutocompleteInput"
 import RangeInput from "../input/RangeInput"
 import RenderUserTag from "../input/AutocompleteInput/RenderUserTag"
+import {useState} from "react"
 import {useSearchParams} from "react-router-dom"
 import {useSelector} from "react-redux"
 import {createParamsObject, createRangeValue, createIDsValue} from "../../utils/helpers"
 
-const WaterAnalysisFilters = ({ anchorEl, onClose }) => {
+const WaterAnalysisFilters = () => {
+
+    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
+
+    const [anchorEl, setAnchorEl] = useState(null)
 
     const [params, setParams] = useSearchParams()
 
@@ -51,16 +57,25 @@ const WaterAnalysisFilters = ({ anchorEl, onClose }) => {
     }
 
     return (
+        <>
+        <Button
+            size={isDownSm ? 'small' : 'medium'}
+            variant="contained"
+            startIcon={<FilterAltIcon/>}
+            onClick={ e => setAnchorEl(e.currentTarget) }
+        >
+            Filters
+        </Button>
         <Popover
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
-            onClose={onClose}
+            onClose={ e => setAnchorEl(null) }
             anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             PaperProps={{ sx: { padding: 1 } }}
         >
             <Stack direction="row" justifyContent="end">
-                <IconButton size="small" onClick={onClose}>
+                <IconButton size="small" onClick={ e => setAnchorEl(null) }>
                     <CloseIcon fontSize="small"/>
                 </IconButton>
             </Stack>
@@ -168,6 +183,7 @@ const WaterAnalysisFilters = ({ anchorEl, onClose }) => {
                 </Grid>
             </Grid>
         </Popover>
+        </>
     )
 }
 

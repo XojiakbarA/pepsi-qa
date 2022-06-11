@@ -1,5 +1,5 @@
-import {Box, Divider, IconButton, Stack, Tooltip, Typography} from "@mui/material"
-import { GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid"
+import {Divider, IconButton, Stack, Tooltip, Typography} from "@mui/material"
+import {GridToolbarContainer} from "@mui/x-data-grid"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import AnalysisDetails from "./AnalysisDetails"
 import {useState} from "react"
@@ -11,12 +11,6 @@ const MyGridToolbar = ({ analysis }) => {
 
     return (
         <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-            {/*<Box>*/}
-            {/*<GridToolbarColumnsButton/>*/}
-            {/*<GridToolbarFilterButton/>*/}
-            {/*<GridToolbarDensitySelector/>*/}
-            {/*<GridToolbarExport/>*/}
-            {/*</Box>*/}
             <Stack
                 alignSelf="end"
                 alignItems="center"

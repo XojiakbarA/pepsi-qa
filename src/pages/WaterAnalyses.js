@@ -2,6 +2,7 @@ import {Grid, LinearProgress} from "@mui/material"
 import WaterIcon from "../components/icons/WaterIcon"
 import PageHeader from "../components/common/PageHeader"
 import {DataGrid} from "@mui/x-data-grid"
+import WaterAnalysisFilters from "../components/common/WaterAnalysisFilters"
 import {useSearchParams} from "react-router-dom"
 import {useAnalyses} from "../hooks/useAnalyses"
 import {fetchWaterAnalyses} from "../api"
@@ -107,7 +108,7 @@ const WaterAnalyses = () => {
                 <PageHeader
                     icon={<WaterIcon width={40}/>}
                     title="Water Analyses"
-                    filterType="water"
+                    rightComponent={<WaterAnalysisFilters/>}
                 />
             </Grid>
             <Grid item xs={12}>

@@ -10,7 +10,7 @@ const MainLayout = () => {
     const [open, setOpen] = useState(false)
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', padding: 3 }}>
             <Header
                 open={open}
                 handleMenuClick={e => setOpen(true)}

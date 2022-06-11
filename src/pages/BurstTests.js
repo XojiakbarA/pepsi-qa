@@ -7,6 +7,7 @@ import PageHeader from "../components/common/PageHeader"
 import PageFooter from "../components/common/PageFooter"
 import NoResults from "../components/common/NoResults"
 import BrokenIcon from "../components/icons/BrokenIcon"
+import ProductAnalysisFilters from "../components/common/ProductAnalysisFilters"
 import {useSearchParams} from "react-router-dom"
 import {useAnalyses} from "../hooks/useAnalyses"
 import {fetchBurstTests} from "../api"
@@ -45,6 +46,7 @@ const BurstTests = () => {
                 <PageHeader
                     icon={<BrokenIcon width={40}/>}
                     title="Burst Tests"
+                    rightComponent={<ProductAnalysisFilters/>}
                 />
             </Grid>
             <Grid item xs={12}>
