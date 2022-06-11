@@ -1,8 +1,8 @@
-import {IconButton, Stack, Tooltip} from "@mui/material";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import YearMonthPicker from "../../input/YearMonthPicker";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import {useSearchParams} from "react-router-dom";
+import {IconButton, Stack, Tooltip} from "@mui/material"
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
+import ChevronRightIcon from "@mui/icons-material/ChevronRight"
+import YearMonthPicker from "../../input/YearMonthPicker"
+import {useSearchParams} from "react-router-dom"
 
 
 const ShiftTablePagination = ({ date, minDate, maxDate, getMonthName }) => {

@@ -1,4 +1,4 @@
-import {IconButton, TableCell, Tooltip} from "@mui/material"
+import {IconButton, TableCell, Tooltip, useMediaQuery} from "@mui/material"
 import LightModeIcon from "@mui/icons-material/LightMode"
 import DarkModeIcon from "@mui/icons-material/DarkMode"
 import WeekendIcon from "@mui/icons-material/Weekend"
@@ -7,11 +7,13 @@ import HomeIcon from "@mui/icons-material/Home"
 
 const ShiftTableCell = ({ value, onClick }) => {
 
+    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
+
     return (
         <TableCell>
                 <Tooltip title={value}>
                     <IconButton
-                        size="small"
+                        size={isDownSm ? 'small' : 'medium'}
                         onClick={onClick}
                         color={
                             value === 'day'
@@ -36,21 +38,21 @@ const ShiftTableCell = ({ value, onClick }) => {
                         {
                             value === 'day'
                             ?
-                            <LightModeIcon color="inherit"/>
+                            <LightModeIcon color="inherit" fontSize="inherit"/>
                             :
                             value === 'night'
                             ?
-                            <DarkModeIcon color="inherit"/>
+                            <DarkModeIcon color="inherit" fontSize="inherit"/>
                             :
                             value === 'leave'
                             ?
-                            <WeekendIcon color="inherit"/>
+                            <WeekendIcon color="inherit" fontSize="inherit"/>
                             :
                             value === 'sick_leave'
                             ?
-                            <HotelIcon color="inherit"/>
+                            <HotelIcon color="inherit" fontSize="inherit"/>
                             :
-                            <HomeIcon color="inherit"/>
+                            <HomeIcon color="inherit" fontSize="inherit"/>
                         }
                     </IconButton>
                 </Tooltip>

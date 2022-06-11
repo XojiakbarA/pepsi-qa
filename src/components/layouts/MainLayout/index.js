@@ -1,6 +1,5 @@
-import {Box} from '@mui/material'
+import {Box, Container, Toolbar} from '@mui/material'
 import {Outlet} from "react-router"
-import {DrawerHeader} from "./styled"
 import Header from "./Header"
 import Sidebar from "./Sidebar"
 import {useState} from "react"
@@ -10,19 +9,17 @@ const MainLayout = () => {
     const [open, setOpen] = useState(false)
 
     return (
-        <Box sx={{ display: 'flex', padding: 3 }}>
-            <Header
-                open={open}
-                handleMenuClick={e => setOpen(true)}
-            />
+        <Box>
+            <Header handleOpenClick={e => setOpen(true)}/>
             <Sidebar
                 open={open}
                 handleCloseClick={e => setOpen(false)}
             />
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                <DrawerHeader/>
+            <Toolbar sx={{ marginBottom: 2 }}/>
+            <Container maxWidth="xl">
                 <Outlet/>
-            </Box>
+            </Container>
+            <Toolbar/>
         </Box>
     );
 }

@@ -1,6 +1,8 @@
-import {Chip, TableCell, TableHead, TableRow, Typography} from "@mui/material"
+import {Chip, TableCell, TableHead, TableRow, Typography, useMediaQuery} from "@mui/material"
 
 const ShiftTableHead = ({ monthDays, getDayName }) => {
+
+    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
     const isToday = (date) => date.toLocaleDateString() === new Date().toLocaleDateString()
 
@@ -18,6 +20,8 @@ const ShiftTableHead = ({ monthDays, getDayName }) => {
                         <TableCell key={day.getDate()}>
                             <Chip
                                 label={day.getDate()}
+                                size={isDownSm ? 'small' : 'medium'}
+                                variant={isToday(day) ? 'filled' : 'outlined'}
                                 color={isToday(day) ? 'primary' : 'default'}
                             />
                         </TableCell>
@@ -32,7 +36,7 @@ const ShiftTableHead = ({ monthDays, getDayName }) => {
                     monthDays.map(day => (
                         <TableCell key={day.getDate()}>
                             <Typography
-                                variant="body2"
+                                variant={isDownSm ? 'caption' : 'body2'}
                                 color={ day.getDay() === 0 || day.getDay() === 6 ? 'error' : 'primary' }
                             >
                                 {getDayName('short', day)}

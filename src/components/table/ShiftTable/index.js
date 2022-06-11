@@ -1,4 +1,4 @@
-import {Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography} from "@mui/material"
+import {Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, useMediaQuery} from "@mui/material"
 import ShiftTableHead from "./ShiftTableHead"
 import ShiftTableCell from "./ShiftTableCell"
 import ShiftTableToolbar from "./ShiftTableToolbar"
@@ -13,6 +13,8 @@ const ShiftTable = ({ shifts }) => {
 
     const [anchorEl, setAnchorEl] = useState(null)
     const [shift, setShift] = useState('day')
+
+    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
     const handleShiftClick = (e, shift, i) => {
         console.log(shift)
@@ -36,7 +38,7 @@ const ShiftTable = ({ shifts }) => {
         <Paper>
             <ShiftTableToolbar/>
             <TableContainer>
-                <Table>
+                <Table size={isDownSm ? 'small' : 'medium'}>
                     <ShiftTableHead
                         monthDays={monthDays}
                         getDayName={getDayName}

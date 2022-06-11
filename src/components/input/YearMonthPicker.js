@@ -1,4 +1,5 @@
 import {Button, TextField, Tooltip} from "@mui/material"
+import EventIcon from '@mui/icons-material/Event'
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers"
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns"
 import enLocale from "date-fns/locale/en-GB"
@@ -25,7 +26,12 @@ const YearMonthPicker = ({ minDate, maxDate, value, onChange, buttonText }) => {
                         <div ref={ref}>
                             <TextField {...inputProps} ref={inputRef} type="hidden" variant="standard"/>
                             <Tooltip title="Select Date">
-                                <Button onClick={ e => setOpen(true) } sx={{ whiteSpace: 'nowrap' }}>
+                                <Button
+                                    sx={{ whiteSpace: 'nowrap' }}
+                                    onClick={ e => setOpen(true) }
+                                    endIcon={<EventIcon/>}
+
+                                >
                                     {buttonText}
                                 </Button>
                             </Tooltip>

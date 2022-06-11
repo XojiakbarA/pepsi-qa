@@ -1,5 +1,4 @@
-import {IconButton, Divider, List, ListItem, ListItemButton, ListItemText, ListSubheader} from "@mui/material"
-import ChevronRightIcon from "@mui/icons-material/ChevronRight"
+import {Drawer, IconButton, Divider, List, ListItem, ListItemButton, ListItemText, ListSubheader, Stack} from "@mui/material"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ChemicalIcon from "../../icons/ChemicalIcon"
@@ -9,8 +8,6 @@ import WaterIcon from "../../icons/WaterIcon"
 import BarometerIcon from "../../icons/BarometerIcon"
 import BrokenIcon from "../../icons/BrokenIcon"
 import ScheduleIcon from "../../icons/ScheduleIcon"
-import {Drawer, DrawerHeader} from "./styled"
-import {useTheme} from "@mui/material/styles"
 import {Link, useLocation} from "react-router-dom"
 
 const menu = [
@@ -27,44 +24,29 @@ const menu2 = [
 
 const Sidebar = ({ open, handleCloseClick }) => {
 
-    const theme = useTheme()
-
     const location = useLocation()
 
     return (
-        <Drawer variant="permanent" open={open}>
-            <DrawerHeader>
+        <Drawer open={open} onClose={handleCloseClick}>
+            <Stack alignItems="end" padding={1}>
                 <IconButton onClick={handleCloseClick}>
-                    {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                    <ChevronLeftIcon />
                 </IconButton>
-            </DrawerHeader>
+            </Stack>
             <Divider/>
             <List>
-                <ListSubheader sx={{ opacity: open ? 1 : 0 }}>Analyses</ListSubheader>
+                <ListSubheader>Analyses</ListSubheader>
                 {
                     menu.map(({ title, path, icon }) => (
-                        <ListItem key={title} disablePadding sx={{ display: 'block' }}>
+                        <ListItem key={title} disablePadding>
                             <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                }}
+                                onClick={handleCloseClick}
                                 component={Link}
                                 to={path}
                                 selected={path === location.pathname}
                             >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    {icon}
-                                </ListItemIcon>
+                                <ListItemIcon>{icon}</ListItemIcon>
                                 <ListItemText
-                                    sx={{ opacity: open ? 1 : 0 }}
                                     primary={title}
                                     primaryTypographyProps={{ noWrap: true }}
                                 />
@@ -77,28 +59,15 @@ const Sidebar = ({ open, handleCloseClick }) => {
             <List>
                 {
                     menu2.map(({ title, path, icon }) => (
-                        <ListItem key={title} disablePadding sx={{ display: 'block' }}>
+                        <ListItem key={title} disablePadding>
                             <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                }}
+                                onClick={handleCloseClick}
                                 component={Link}
                                 to={path}
                                 selected={path === location.pathname}
                             >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    {icon}
-                                </ListItemIcon>
+                                <ListItemIcon>{icon}</ListItemIcon>
                                 <ListItemText
-                                    sx={{ opacity: open ? 1 : 0 }}
                                     primary={title}
                                     primaryTypographyProps={{ noWrap: true }}
                                 />
