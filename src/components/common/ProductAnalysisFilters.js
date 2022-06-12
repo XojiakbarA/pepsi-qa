@@ -34,6 +34,7 @@ const ProductAnalysisFilters = () => {
     const containerSupplierValue = createIDsValue('container_supplier_ids', containerSuppliers, params)
     const capValue = createIDsValue('cap_ids', caps, params)
     const userValue = createIDsValue('user_ids', users, params)
+    const dateValue = { from: params.get('from'), to: params.get('to') }
 
     const handleSyrupNumberChange = (e) => {
         const syrup_id = e.target.value
@@ -85,7 +86,7 @@ const ProductAnalysisFilters = () => {
                 </IconButton>
             </Stack>
             <Grid container spacing={2} maxWidth={600}>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={6} sm={3}>
                     <TextField
                         fullWidth
                         variant="standard"
@@ -96,10 +97,10 @@ const ProductAnalysisFilters = () => {
                         onChange={handleSyrupNumberChange}
                     />
                 </Grid>
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12} sm={9}>
                     <DateTimeRangePicker
-                        from={params.get('from')}
-                        to={params.get('to')}
+                        label="Checked At"
+                        value={dateValue}
                         onFromChange={ v => handleDateChange(v, 'from') }
                         onToChange={ v => handleDateChange(v, 'to') }
                     />

@@ -7,6 +7,8 @@ import formatReducer from "./slices/formatsSlice"
 import containerSupplierReducer from "./slices/containerSuppliersSlice"
 import capReducer from "./slices/capsSlice"
 import usersReducer from "./slices/usersSlice"
+import perPagesReducer from "./slices/perPagesSlice"
+import tanksReducer from "./slices/tanksSlice"
 
 export const store = configureStore({
     reducer: {
@@ -17,6 +19,8 @@ export const store = configureStore({
         formats: formatReducer,
         containerSuppliers: containerSupplierReducer,
         caps: capReducer,
-        users: usersReducer
+        users: usersReducer,
+        tanks: tanksReducer,
+        perPages: perPagesReducer,
     }
 })

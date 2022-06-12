@@ -1,13 +1,17 @@
 import {Box, Pagination, Stack, useMediaQuery} from "@mui/material"
 import SelectInput from "../input/SelectInput"
 import {useSearchParams} from "react-router-dom"
+import {useSelector} from "react-redux"
 import {createParamsObject} from "../../utils/helpers"
+import {perPagesSelector} from "../../store/selectors"
 
-const PageFooter = ({ visible, count, options }) => {
+const PageFooter = ({ meta }) => {
 
     const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
     const [params, setParams] = useSearchParams()
+
+    const { multiTable: options } = useSelector(perPagesSelector)
 
     const handlePageChange = (e, page) => {
         const prevParams = createParamsObject(params)
@@ -21,27 +25,29 @@ const PageFooter = ({ visible, count, options }) => {
 
     return (
         <Box display="flex" justifyContent="flex-end">
-            {
-                visible
-                &&
-                <Stack
-                    spacing={2}
-                    direction={isDownSm ? "column-reverse" : "row"}
-                    alignItems={isDownSm ? "start" : "center"}
-                >
+            <Stack
+                spacing={2}
+                direction={isDownSm ? "column-reverse" : "row"}
+                alignItems={isDownSm ? "start" : "center"}
+            >
+                {
+                    meta?.total > options[0] &&
                     <SelectInput
                         perPage={params.get('per_page') || options[0]}
                         options={options}
                         onChange={handlePerPageChange}
                     />
+                }
+                {
+                    meta?.last_page > 1 &&
                     <Pagination
-                        count={count}
+                        count={meta.last_page}
                         color="primary"
                         page={Number(params.get('page')) || 1}
                         onChange={handlePageChange}
                     />
-                </Stack>
-            }
+                }
+            </Stack>
         </Box>
     )
 }

@@ -5,7 +5,7 @@ import {
     fetchCsrfCookie,
     fetchFormats,
     fetchLines,
-    fetchProducts,
+    fetchProducts, fetchTanks,
     fetchUser, fetchUsers,
     userLogin,
     userLogout,
@@ -155,6 +155,19 @@ export const getUsers = createAsyncThunk('users/get',
     async (_, { rejectWithValue }) => {
         try {
             const res = await fetchUsers()
+            if (res.status === 200) {
+                return res.data.data
+            }
+        } catch ({ response }) {
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const getTanks = createAsyncThunk('tanks/get',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await fetchTanks()
             if (res.status === 200) {
                 return res.data.data
             }

@@ -30,6 +30,7 @@ const WaterAnalysisFilters = () => {
     const clValue = createRangeValue(params, 'cl')
     const mnValue = createRangeValue(params, 'mn')
     const feValue = createRangeValue(params, 'fe')
+    const dateValue = { from: params.get('from'), to: params.get('to') }
 
     const handleFieldChange = (e, field) => {
         const value = e.target.value?.trim()
@@ -50,10 +51,10 @@ const WaterAnalysisFilters = () => {
             setParams({ ...prevParams })
         }
     }
-    const handleUserChange = (e, users) => {
-        const user_ids = users.map(item => item.id)
+    const handleIDsChange = (value, field) => {
+        const ids = value.map(item => item.id)
         const prevParams = createParamsObject(params)
-        setParams({ ...prevParams, user_ids, page: 1 })
+        setParams({ ...prevParams, [field]: ids, page: 1 })
     }
 
     return (
@@ -80,7 +81,7 @@ const WaterAnalysisFilters = () => {
                 </IconButton>
             </Stack>
             <Grid container spacing={2} maxWidth={600}>
-                <Grid item xs={6}>
+                <Grid item xs={6} sm={4}>
                     <TextField
                         fullWidth
                         variant="standard"
@@ -90,13 +91,13 @@ const WaterAnalysisFilters = () => {
                         onChange={ e => handleFieldChange(e, 'place') }
                     />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={8}>
                     <AutocompleteInput
                         name="user_name"
                         label="Checked By"
                         options={users}
                         value={userValue}
-                        onChange={handleUserChange}
+                        onChange={(e, v) => handleIDsChange(v, 'user_ids')}
                         getOptionLabel={option => `${option.last_name} ${option.first_name}`}
                         renderTag={(value, getTagProps) => <RenderUserTag value={value} getTagProps={getTagProps}/>}
                     />
@@ -173,10 +174,10 @@ const WaterAnalysisFilters = () => {
                         onMaxChange={ e => handleFieldChange(e, 'fe_max') }
                     />
                 </Grid>
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12}>
                     <DateTimeRangePicker
-                        from={params.get('from')}
-                        to={params.get('to')}
+                        label="Checked At"
+                        value={dateValue}
                         onFromChange={ v => handleDateChange(v, 'from') }
                         onToChange={ v => handleDateChange(v, 'to') }
                     />

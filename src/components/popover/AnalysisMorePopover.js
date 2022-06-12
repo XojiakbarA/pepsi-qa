@@ -1,7 +1,6 @@
-import {IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Popover, Stack} from "@mui/material"
-import CloseIcon from "@mui/icons-material/Close"
+import {List, ListItem, ListItemSecondaryAction, ListItemText, Popover} from "@mui/material"
 
-const AnalysisDetails = ({ anchorEl, onClose, analysis }) => {
+const AnalysisMorePopover = ({ anchorEl, onClose, analysis }) => {
 
     return (
         <Popover
@@ -10,13 +9,7 @@ const AnalysisDetails = ({ anchorEl, onClose, analysis }) => {
             onClose={onClose}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            PaperProps={{ sx: { padding: 1 } }}
         >
-            <Stack direction="row" justifyContent="end">
-                <IconButton size="small" onClick={onClose}>
-                    <CloseIcon fontSize="small"/>
-                </IconButton>
-            </Stack>
             <List dense sx={{ width: 300 }}>
                 <ListItem>
                     <ListItemText>Line Name:</ListItemText>
@@ -47,4 +40,4 @@ const AnalysisDetails = ({ anchorEl, onClose, analysis }) => {
     )
 }
 
-export default AnalysisDetails
+export default AnalysisMorePopover

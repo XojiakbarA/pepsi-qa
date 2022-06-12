@@ -4,9 +4,11 @@ import PageHeader from "../components/common/PageHeader"
 import {DataGrid} from "@mui/x-data-grid"
 import WaterAnalysisFilters from "../components/common/WaterAnalysisFilters"
 import {useSearchParams} from "react-router-dom"
+import {useSelector} from "react-redux"
 import {useAnalyses} from "../hooks/useAnalyses"
 import {fetchWaterAnalyses} from "../api"
 import {createParamsObject} from "../utils/helpers"
+import {perPagesSelector} from "../store/selectors"
 
 const columns = [
     {
@@ -87,6 +89,8 @@ const WaterAnalyses = () => {
 
     const [params, setParams] = useSearchParams()
 
+    const { singleTable: perPageOptions } = useSelector(perPagesSelector)
+
     const { data, meta, loading } = useAnalyses(params, fetchWaterAnalyses)
 
     const pageSize = Number(params.get('per_page')) || 10
@@ -115,15 +119,13 @@ const WaterAnalyses = () => {
                 <DataGrid
                     autoHeight
                     disableColumnMenu
-                    disableSelectionOnClick
-                    density="compact"
                     loading={loading}
                     columns={columns}
                     rows={data}
                     rowCount={meta.total || 100}
                     page={page - 1}
                     pageSize={pageSize}
-                    rowsPerPageOptions={[10, 25, 50]}
+                    rowsPerPageOptions={perPageOptions}
                     onPageSizeChange={handlePageSizeChange}
                     onPageChange={handlePageChange}
                     paginationMode="server"

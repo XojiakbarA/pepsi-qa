@@ -85,11 +85,7 @@ const BurstTests = () => {
                 </Stack>
             </Grid>
             <Grid item xs={12}>
-                <PageFooter
-                    visible={!loading && !!data.length}
-                    count={meta.last_page}
-                    options={[6, 12, 18]}
-                />
+                <PageFooter meta={meta}/>
             </Grid>
         </Grid>
     )

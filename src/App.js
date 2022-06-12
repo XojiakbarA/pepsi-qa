@@ -3,6 +3,7 @@ import MainLayout from "./components/layouts/MainLayout"
 import ProtectedRoute from "./components/hoc/ProtectedRoute"
 import Auth from "./pages/Auth"
 import Home from "./pages/Home"
+import SyrupAnalyses from "./pages/SyrupAnalyses"
 import PhysicalChemicalAnalyses from "./pages/PhysicalChemicalAnalyses"
 import RemovalTorqueAnalyses from "./pages/RemovalTorqueAnalyses"
 import SectionWeightAnalyses from "./pages/SectionWeightAnalyses"
@@ -13,7 +14,16 @@ import ShiftSchedule from "./pages/ShiftSchedule"
 import MySnackbar from "./components/common/MySnackbar"
 import {useEffect} from "react"
 import {useDispatch} from "react-redux"
-import {getCaps, getContainerSuppliers, getFormats, getLines, getProducts, getUser, getUsers} from "./store/actionCreators"
+import {
+    getCaps,
+    getContainerSuppliers,
+    getFormats,
+    getLines,
+    getProducts,
+    getTanks,
+    getUser,
+    getUsers
+} from "./store/actionCreators"
 
 function App() {
 
@@ -27,6 +37,7 @@ function App() {
         dispatch(getContainerSuppliers())
         dispatch(getCaps())
         dispatch(getUsers())
+        dispatch(getTanks())
     }, [dispatch])
 
     return (
@@ -35,6 +46,7 @@ function App() {
             <Route path="/" element={<MainLayout/>}>
                 <Route element={<ProtectedRoute/>}>
                     <Route index element={<Home/>}/>
+                    <Route path="/syrup-analyses" element={<SyrupAnalyses/>}/>
                     <Route path="/physical-chemical-analyses" element={<PhysicalChemicalAnalyses/>}/>
                     <Route path="/removal-torque-analyses" element={<RemovalTorqueAnalyses/>}/>
                     <Route path="/section-weight-analyses" element={<SectionWeightAnalyses/>}/>

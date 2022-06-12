@@ -31,8 +31,16 @@ export const fetchUsers = async () => {
     return await instance.get('api/users')
 }
 
+export const fetchTanks = async () => {
+    return await instance.get('api/tanks')
+}
+
+export const fetchSyrups = async (params) => {
+    return await instance.get('api/syrups', { params })
+}
+
 export const fetchPhysicalChemicalAnalyses = async (params) => {
-    return await instance.get(`api/physical-chemical-analyses`, { params})
+    return await instance.get(`api/physical-chemical-analyses`, { params })
 }
 
 export const fetchRemovalTorqueAnalyses = async (params) => {
