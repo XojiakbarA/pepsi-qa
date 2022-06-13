@@ -2,31 +2,36 @@ import {Autocomplete} from "@mui/material"
 import RenderInput from "./RenderInput"
 
 const AutocompleteInput = ({
-   name, label, loading, value, options, getOptionLabel,
-   renderOption, renderTag, onChange
+   name, label, loading, value, options, getOptionLabel, getOptionDisabled,
+   renderOption, renderTag, onChange, onBlur, error, helperText
 }) => {
 
     return (
         <Autocomplete
             fullWidth
             multiple
-            loading={loading}
-            options={options}
+            ChipProps={{ size: 'small' }}
+            getOptionDisabled={getOptionDisabled}
             getOptionLabel={getOptionLabel}
             isOptionEqualToValue={(option, value) => option.id === value.id}
+            loading={loading}
+            options={options}
             value={value}
             onChange={onChange}
-            ChipProps={{ size: 'small' }}
+            onBlur={onBlur}
+            renderOption={renderOption}
+            renderTags={renderTag}
             renderInput={(params) => (
                 <RenderInput
+                    variant="standard"
                     params={params}
                     name={name}
                     label={label}
                     loading={loading}
+                    error={error}
+                    helperText={helperText}
                 />
             )}
-            renderOption={renderOption}
-            renderTags={renderTag}
         />
     )
 }

@@ -1,13 +1,12 @@
-import {Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, useMediaQuery} from "@mui/material"
+import {LinearProgress, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, useMediaQuery} from "@mui/material"
 import ShiftTableHead from "./ShiftTableHead"
 import ShiftTableCell from "./ShiftTableCell"
 import ShiftTableToolbar from "./ShiftTableToolbar"
-import ShiftTableFooter from "./ShiftTableFooter"
 import ShiftTablePopover from "./ShiftTablePopover"
 import {useSearchParams} from "react-router-dom"
 import {useState} from "react"
 
-const ShiftTable = ({ shifts }) => {
+const ShiftTable = ({ shifts, loading }) => {
 
     const [params] = useSearchParams()
 
@@ -36,8 +35,14 @@ const ShiftTable = ({ shifts }) => {
 
     return (
         <Paper>
-            <ShiftTableToolbar/>
-            <TableContainer>
+            <ShiftTableToolbar
+                date={date}
+                minDate={minDate}
+                maxDate={maxDate}
+                getMonthName={getMonthName}
+            />
+            { loading && <LinearProgress/> }
+            <TableContainer sx={{ minHeight: 500 }}>
                 <Table size={isDownSm ? 'small' : 'medium'}>
                     <ShiftTableHead
                         monthDays={monthDays}
@@ -53,6 +58,7 @@ const ShiftTable = ({ shifts }) => {
                                 {
                                     shift.shift_values.map((value, i) => (
                                         <ShiftTableCell
+                                            disabled={loading}
                                             key={i}
                                             value={value}
                                             onClick={ e => handleShiftClick(e, shift, i) }
@@ -75,12 +81,6 @@ const ShiftTable = ({ shifts }) => {
                     </TableBody>
             </Table>
         </TableContainer>
-            <ShiftTableFooter
-                date={date}
-                minDate={minDate}
-                maxDate={maxDate}
-                getMonthName={getMonthName}
-            />
             <ShiftTablePopover
                 anchorEl={anchorEl}
                 onClose={ e => setAnchorEl(null) }

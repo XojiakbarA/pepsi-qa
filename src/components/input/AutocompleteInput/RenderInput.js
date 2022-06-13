@@ -1,13 +1,15 @@
 import {CircularProgress, TextField} from "@mui/material"
 
-const RenderInput = ({ params, name, label, loading }) => {
+const RenderInput = ({ variant, params, name, label, loading, error, helperText }) => {
 
     return (
         <TextField
+            variant={variant}
             {...params}
             name={name}
-            variant="standard"
             label={label}
+            error={error}
+            helperText={helperText}
             InputProps={{
                 ...params.InputProps,
                 endAdornment: (

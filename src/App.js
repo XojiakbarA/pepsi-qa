@@ -16,10 +16,10 @@ import {useEffect} from "react"
 import {useDispatch} from "react-redux"
 import {
     getCaps,
-    getContainerSuppliers,
+    getContainerSuppliers, getFactories,
     getFormats,
     getLines,
-    getProducts,
+    getProducts, getShiftModes,
     getTanks,
     getUser,
     getUsers
@@ -38,6 +38,8 @@ function App() {
         dispatch(getCaps())
         dispatch(getUsers())
         dispatch(getTanks())
+        dispatch(getShiftModes())
+        dispatch(getFactories())
     }, [dispatch])
 
     return (

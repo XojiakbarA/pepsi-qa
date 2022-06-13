@@ -1,4 +1,4 @@
-import {Button, TextField, Tooltip} from "@mui/material"
+import {Button, TextField, Tooltip, useMediaQuery} from "@mui/material"
 import EventIcon from '@mui/icons-material/Event'
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers"
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns"
@@ -6,6 +6,8 @@ import enLocale from "date-fns/locale/en-GB"
 import {useState} from "react"
 
 const YearMonthPicker = ({ minDate, maxDate, value, onChange, buttonText }) => {
+
+    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
     const [open, setOpen] = useState(false)
 
@@ -28,6 +30,7 @@ const YearMonthPicker = ({ minDate, maxDate, value, onChange, buttonText }) => {
                             <Tooltip title="Select Date">
                                 <Button
                                     sx={{ whiteSpace: 'nowrap' }}
+                                    size={isDownSm ? 'small' : 'medium'}
                                     onClick={ e => setOpen(true) }
                                     endIcon={<EventIcon/>}
 

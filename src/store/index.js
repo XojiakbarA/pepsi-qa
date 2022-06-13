@@ -9,6 +9,9 @@ import capReducer from "./slices/capsSlice"
 import usersReducer from "./slices/usersSlice"
 import perPagesReducer from "./slices/perPagesSlice"
 import tanksReducer from "./slices/tanksSlice"
+import shiftModesReducer from "./slices/shiftModesSlice"
+import factoriesReducer from "./slices/factoriesSlice"
+import shiftsReducer from "./slices/shiftsSlice"
 
 export const store = configureStore({
     reducer: {
@@ -22,5 +25,8 @@ export const store = configureStore({
         users: usersReducer,
         tanks: tanksReducer,
         perPages: perPagesReducer,
+        shiftModes: shiftModesReducer,
+        factories: factoriesReducer,
+        shifts: shiftsReducer
     }
 })

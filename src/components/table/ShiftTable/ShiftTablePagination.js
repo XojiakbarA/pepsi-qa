@@ -1,4 +1,4 @@
-import {IconButton, Stack, Tooltip} from "@mui/material"
+import {IconButton, Stack, Tooltip, useMediaQuery} from "@mui/material"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import YearMonthPicker from "../../input/YearMonthPicker"
@@ -6,6 +6,8 @@ import {useSearchParams} from "react-router-dom"
 
 
 const ShiftTablePagination = ({ date, minDate, maxDate, getMonthName }) => {
+
+    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
     const [params, setParams] = useSearchParams()
 
@@ -31,8 +33,13 @@ const ShiftTablePagination = ({ date, minDate, maxDate, getMonthName }) => {
         <Stack direction="row" spacing={1} alignItems="center">
             <Tooltip title="Prev Month">
                 <span>
-                <IconButton color="primary" size="small" onClick={handlePrevClick} disabled={isEndPrev}>
-                    <ChevronLeftIcon color="inherit"/>
+                <IconButton
+                    color="primary"
+                    size={isDownSm ? 'small' : 'medium'}
+                    onClick={handlePrevClick}
+                    disabled={isEndPrev}
+                >
+                    <ChevronLeftIcon color="inherit" fontSize="inherit"/>
                 </IconButton>
                 </span>
             </Tooltip>
@@ -45,8 +52,13 @@ const ShiftTablePagination = ({ date, minDate, maxDate, getMonthName }) => {
             />
             <Tooltip title="Next Month">
                 <span>
-                <IconButton color="primary" size="small" onClick={handleNextClick} disabled={isEndNext}>
-                    <ChevronRightIcon color="inherit"/>
+                <IconButton
+                    color="primary"
+                    size={isDownSm ? 'small' : 'medium'}
+                    onClick={handleNextClick}
+                    disabled={isEndNext}
+                >
+                    <ChevronRightIcon color="inherit" fontSize="inherit"/>
                 </IconButton>
                 </span>
             </Tooltip>

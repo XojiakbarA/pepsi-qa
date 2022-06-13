@@ -2,11 +2,11 @@ import {createAsyncThunk} from "@reduxjs/toolkit"
 import {
     fetchCaps,
     fetchContainerSuppliers,
-    fetchCsrfCookie,
+    fetchCsrfCookie, fetchFactories,
     fetchFormats,
     fetchLines,
-    fetchProducts, fetchTanks,
-    fetchUser, fetchUsers,
+    fetchProducts, fetchShiftModes, fetchShifts, fetchTanks,
+    fetchUser, fetchUsers, storeShift,
     userLogin,
     userLogout,
     userRegister
@@ -170,6 +170,61 @@ export const getTanks = createAsyncThunk('tanks/get',
             const res = await fetchTanks()
             if (res.status === 200) {
                 return res.data.data
+            }
+        } catch ({ response }) {
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const getShiftModes = createAsyncThunk('shiftModes/get',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await fetchShiftModes()
+            if (res.status === 200) {
+                return res.data.data
+            }
+        } catch ({ response }) {
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const getFactories = createAsyncThunk('factories/get',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await fetchFactories()
+            if (res.status === 200) {
+                return res.data.data
+            }
+        } catch ({ response }) {
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const getShifts = createAsyncThunk('shifts/get',
+    async (params, { rejectWithValue }) => {
+        try {
+            const res = await fetchShifts(params)
+            if (res.status === 200) {
+                return res.data.shifts
+            }
+        } catch ({ response }) {
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const createShift = createAsyncThunk('shifts/create',
+    async ({ data, setSubmitting, handleClose }, { dispatch, rejectWithValue }) => {
+        try {
+            const res = await storeShift(data)
+            if (res.status === 201) {
+                setSubmitting(false)
+                handleClose()
+                dispatch(setSnackbar({ data: 'Shift created successfully!', open: true, color: 'success' }))
+                return res.data.shifts
             }
         } catch ({ response }) {
             return rejectWithValue(response.data.message)

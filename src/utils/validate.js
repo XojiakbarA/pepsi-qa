@@ -45,3 +45,20 @@ export const registerValidationSchema = yup.object({
                 )
             })
 })
+
+export const createShiftValidationSchema = yup.object({
+    user_ids: yup
+        .array('Choose Employees')
+        .of(yup.number('ID must be a integer'))
+        .min(1, 'Choose Employees')
+        .required('Employees is Required'),
+    factory_id: yup
+        .number('Choose Factory')
+        .required('Factory is Required'),
+    shift_mode_id: yup
+        .number('Choose Mode')
+        .required('Mode is Required'),
+    initial_shift: yup
+        .number('Choose Initial Shift')
+        .required('Initial Shift is Required')
+})

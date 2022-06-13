@@ -1,16 +1,23 @@
-import {CircularProgress, Grid} from "@mui/material"
+import {Grid} from "@mui/material"
 import ScheduleIcon from "../components/icons/ScheduleIcon"
 import PageHeader from "../components/common/PageHeader"
 import ShiftTable from "../components/table/ShiftTable"
 import {useSearchParams} from "react-router-dom"
-import {useAnalyses} from "../hooks/useAnalyses"
-import {fetchShifts} from "../api"
+import {useEffect} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {getShifts} from "../store/actionCreators"
+import {createParamsObject} from "../utils/helpers"
 
 const ShiftSchedule = () => {
 
     const [params] = useSearchParams()
+    const dispatch = useDispatch()
 
-    const { data, loading } = useAnalyses(params, fetchShifts)
+    const { data, loading } = useSelector(state => state.shifts)
+
+    useEffect(() => {
+        dispatch(getShifts(createParamsObject(params)))
+    }, [dispatch, params])
 
     return (
         <Grid container spacing={2}>
@@ -22,11 +29,7 @@ const ShiftSchedule = () => {
             </Grid>
             <Grid item xs={12}>
                 {
-                    loading
-                    ?
-                    <CircularProgress/>
-                    :
-                    <ShiftTable shifts={data}/>
+                    <ShiftTable shifts={data} loading={loading}/>
                 }
             </Grid>
         </Grid>

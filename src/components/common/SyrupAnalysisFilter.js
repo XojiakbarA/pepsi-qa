@@ -1,16 +1,16 @@
 import {Button, Grid, IconButton, Popover, Stack, TextField, useMediaQuery} from "@mui/material"
 import FilterAltIcon from "@mui/icons-material/FilterAlt"
 import CloseIcon from "@mui/icons-material/Close"
+import RangeInput from "../input/RangeInput"
+import AutocompleteInput from "../input/AutocompleteInput"
+import DateTimeRangePicker from "../input/DateTimeRangePicker"
+import RenderOption from "../input/AutocompleteInput/RenderOption"
+import RenderTag from "../input/AutocompleteInput/RenderTag"
+import RenderUserTag from "../input/AutocompleteInput/RenderUserTag"
 import {useState} from "react"
+import {useSelector} from "react-redux"
 import {useSearchParams} from "react-router-dom"
-import {createIDsValue, createParamsObject, createRangeValue} from "../../utils/helpers";
-import DateTimeRangePicker from "../input/DateTimeRangePicker";
-import RangeInput from "../input/RangeInput";
-import AutocompleteInput from "../input/AutocompleteInput";
-import RenderUserTag from "../input/AutocompleteInput/RenderUserTag";
-import {useSelector} from "react-redux";
-import RenderOption from "../input/AutocompleteInput/RenderOption";
-import RenderTag from "../input/AutocompleteInput/RenderTag";
+import {createIDsValue, createParamsObject, createRangeValue} from "../../utils/helpers"
 
 const SyrupAnalysisFilter = () => {
 

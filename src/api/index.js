@@ -35,6 +35,14 @@ export const fetchTanks = async () => {
     return await instance.get('api/tanks')
 }
 
+export const fetchShiftModes = async () => {
+    return await instance.get('api/shift-modes')
+}
+
+export const fetchFactories = async () => {
+    return await instance.get('api/factories')
+}
+
 export const fetchSyrups = async (params) => {
     return await instance.get('api/syrups', { params })
 }
@@ -65,6 +73,10 @@ export const fetchBurstTests = async (params) => {
 
 export const fetchShifts = async (params) => {
     return await instance.get(`api/shifts`, { params })
+}
+
+export const storeShift = async (data) => {
+    return await instance.post('api/shifts', data)
 }
 
 export const fetchUser = async () => {
