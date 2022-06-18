@@ -79,6 +79,10 @@ export const storeShift = async (data) => {
     return await instance.post('api/shifts', data)
 }
 
+export const updateShiftValues = async (data) => {
+    return await instance.put('api/shifts', data)
+}
+
 export const fetchUser = async () => {
     return await instance.get('api/auth')
 }

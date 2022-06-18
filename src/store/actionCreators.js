@@ -1,16 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
-import {
-    fetchCaps,
-    fetchContainerSuppliers,
-    fetchCsrfCookie, fetchFactories,
-    fetchFormats,
-    fetchLines,
-    fetchProducts, fetchShiftModes, fetchShifts, fetchTanks,
-    fetchUser, fetchUsers, storeShift,
-    userLogin,
-    userLogout,
-    userRegister
-} from "../api"
+import {fetchCaps, fetchContainerSuppliers, fetchCsrfCookie, fetchFactories, fetchFormats, fetchLines, fetchProducts, fetchShiftModes, fetchShifts, fetchTanks, fetchUser, fetchUsers, storeShift, updateShiftValues, userLogin, userLogout, userRegister} from "../api"
+import { setMustEdit } from "./slices/shiftsSlice"
 import {setSnackbar} from "./slices/snackbarSlice"
 
 export const getUser = createAsyncThunk('user/getUser',
@@ -204,29 +194,49 @@ export const getFactories = createAsyncThunk('factories/get',
 )
 
 export const getShifts = createAsyncThunk('shifts/get',
-    async (params, { rejectWithValue }) => {
+    async (params, { dispatch, rejectWithValue }) => {
         try {
             const res = await fetchShifts(params)
             if (res.status === 200) {
-                return res.data.shifts
+                return res.data.data
             }
         } catch ({ response }) {
+            dispatch(setSnackbar({ data: response.data.message, open: true, color: 'error' }))
             return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const createShift = createAsyncThunk('shifts/create',
-    async ({ data, setSubmitting, handleClose }, { dispatch, rejectWithValue }) => {
+    async ({ data, setFieldError, handleClose }, { dispatch, rejectWithValue }) => {
         try {
             const res = await storeShift(data)
             if (res.status === 201) {
-                setSubmitting(false)
                 handleClose()
                 dispatch(setSnackbar({ data: 'Shift created successfully!', open: true, color: 'success' }))
-                return res.data.shifts
+                return res.data.data
             }
         } catch ({ response }) {
+            dispatch(setSnackbar({ data: response.data.message, open: true, color: 'error' }))
+            if (response.status === 422) {
+                const errors = Object.entries(response.data.errors)
+                errors.forEach(item => setFieldError(item[0], item[1][0]))
+            }
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const editShiftValues = createAsyncThunk('shifts/editValues',
+    async (data, { dispatch, rejectWithValue }) => {
+        try {
+            const res = await updateShiftValues(data)
+            if (res.status === 200) {
+                dispatch(setMustEdit([]))
+                dispatch(setSnackbar({ data: 'Shifts updated successfully!', open: true, color: 'success' }))
+            }
+        } catch ({ response }) {
+            dispatch(setSnackbar({ data: response.data.message, open: true, color: 'error' }))
             return rejectWithValue(response.data.message)
         }
     }

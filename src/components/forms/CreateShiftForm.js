@@ -17,9 +17,9 @@ const CreateShiftForm = ({ date, handleClose }) => {
     const users = useSelector(state => state.users.data)
     const factories = useSelector(state => state.factories.data)
     const shiftModes = useSelector(state => state.shiftModes.data)
-    const shifts = useSelector(state => state.shifts.data)
+    const {data: shifts, createLoading} = useSelector(state => state.shifts)
 
-    const { handleSubmit, handleBlur, getFieldProps, setValues, values, touched, errors, isSubmitting } = useFormik({
+    const { handleSubmit, handleBlur, getFieldProps, setValues, values, touched, errors } = useFormik({
         initialValues: {
             date: date.toLocaleDateString(),
             user_ids: [],
@@ -29,8 +29,8 @@ const CreateShiftForm = ({ date, handleClose }) => {
         },
         enableReinitialize: true,
         validationSchema: createShiftValidationSchema,
-        onSubmit: (data, { setSubmitting }) => {
-            dispatch(createShift({ data, setSubmitting, handleClose }))
+        onSubmit: (data, { setFieldError }) => {
+            dispatch(createShift({ data, setFieldError, handleClose }))
         }
     })
 
@@ -87,10 +87,15 @@ const CreateShiftForm = ({ date, handleClose }) => {
                     helperText={ touched.initial_shift && errors.initial_shift }
                 />
                 <Stack direction="row" spacing={1} justifyContent="end">
-                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button
+                        disabled={createLoading}
+                        onClick={handleClose}
+                    >
+                        Cancel
+                    </Button>
                     <LoadingButton
                         type="submit"
-                        loading={isSubmitting}
+                        loading={createLoading}
                     >
                         Create
                     </LoadingButton>

@@ -7,10 +7,14 @@ import ShiftTablePagination from "./ShiftTablePagination"
 import CreateShiftDialog from "../../dialog/CreateShiftDialog"
 import {useState} from "react"
 import {useSearchParams} from "react-router-dom"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {createIDsValue, createParamsObject} from "../../../utils/helpers"
+import { editShiftValues } from "../../../store/actionCreators"
+import { LoadingButton } from "@mui/lab"
 
 const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName }) => {
+
+    const dispatch = useDispatch()
 
     const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
@@ -18,6 +22,7 @@ const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName }) => {
 
     const [params, setParams] = useSearchParams()
 
+    const { loading, updateValueLoading, mustEdit } = useSelector(state => state.shifts)
     const users = useSelector(state => state.users.data)
 
     const userValue = createIDsValue('user_ids', users, params)
@@ -28,6 +33,9 @@ const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName }) => {
         delete prevParams.syrup_id
         setParams({ ...prevParams, [field]: ids })
     }
+    const handleSaveClick = () => {
+        dispatch(editShiftValues({ shifts: mustEdit }))
+    }
 
     return (
         <Toolbar sx={{ py: 1 }}>
@@ -35,6 +43,7 @@ const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName }) => {
                 <Grid item xs={12} md={4}>
                     <AutocompleteInput
                         label="Show shift of"
+                        disabled={loading}
                         options={users}
                         value={userValue}
                         onChange={(e, v) => handleIDsChange(v, 'user_ids')}
@@ -49,20 +58,25 @@ const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName }) => {
                             minDate={minDate}
                             maxDate={maxDate}
                             getMonthName={getMonthName}
+                            disabled={loading}
                         />
                         <Button
                             size={isDownSm ? 'small' : 'medium'}
                             endIcon={<CreateIcon/>}
                             onClick={ e => setOpen(true) }
+                            disabled={loading}
                         >
                             Create
                         </Button>
-                        <Button
+                        <LoadingButton
                             size={isDownSm ? 'small' : 'medium'}
                             endIcon={<SaveIcon/>}
+                            disabled={!mustEdit.length}
+                            loading={updateValueLoading}
+                            onClick={handleSaveClick}
                         >
                             Save
-                        </Button>
+                        </LoadingButton>
                     </Stack>
                 </Grid>
             </Grid>

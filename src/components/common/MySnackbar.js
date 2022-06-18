@@ -12,7 +12,7 @@ const MySnackbar = () => {
         if (reason === 'clickaway') {
             return
         }
-        dispatch(setSnackbar({ data: '', open: false, color: 'success' }))
+        dispatch(setSnackbar({ open: false }))
     }
 
     return (

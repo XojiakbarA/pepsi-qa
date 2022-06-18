@@ -2,8 +2,8 @@ import {Autocomplete} from "@mui/material"
 import RenderInput from "./RenderInput"
 
 const AutocompleteInput = ({
-   name, label, loading, value, options, getOptionLabel, getOptionDisabled,
-   renderOption, renderTag, onChange, onBlur, error, helperText
+    name, label, loading, value, options, getOptionLabel, getOptionDisabled,
+    renderOption, renderTag, onChange, onBlur, error, helperText, disabled
 }) => {
 
     return (
@@ -11,6 +11,7 @@ const AutocompleteInput = ({
             fullWidth
             multiple
             ChipProps={{ size: 'small' }}
+            disabled={disabled}
             getOptionDisabled={getOptionDisabled}
             getOptionLabel={getOptionLabel}
             isOptionEqualToValue={(option, value) => option.id === value.id}

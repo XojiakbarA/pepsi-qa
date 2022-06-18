@@ -11,9 +11,9 @@ export const snackbarSlice = createSlice({
     initialState,
     reducers: {
         setSnackbar: (state, action) => {
-            state.data = action.payload.data
-            state.open = action.payload.open
-            state.severity = action.payload.color
+            state.data = action.payload.data ?? state.data
+            state.open = action.payload.open ?? state.open
+            state.color = action.payload.color ?? state.color
         }
     }
 })

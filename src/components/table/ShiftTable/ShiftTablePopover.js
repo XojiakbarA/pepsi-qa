@@ -5,14 +5,14 @@ import WeekendIcon from "@mui/icons-material/Weekend"
 import HotelIcon from "@mui/icons-material/Hotel"
 import HomeIcon from "@mui/icons-material/Home"
 
-const ShiftTablePopover = ({ anchorEl, onClose, shift }) => {
+const ShiftTablePopover = ({ anchorEl, onClose, onClick, shiftValue }) => {
 
     const array = [
-        { id: 1, title: 'day', color: 'warning', icon: <LightModeIcon/> },
-        { id: 2, title: 'night', color: 'info', icon: <DarkModeIcon/> },
-        { id: 3, title: 'weekend', color: 'default', icon: <HomeIcon/> },
-        { id: 4, title: 'leave', color: 'error', icon: <WeekendIcon/> },
-        { id: 5, title: 'sick_leave', color: 'secondary', icon: <HotelIcon/> },
+        { id: 1, value: 'day', color: 'warning', icon: <LightModeIcon/> },
+        { id: 2, value: 'night', color: 'info', icon: <DarkModeIcon/> },
+        { id: 3, value: 'weekend', color: 'default', icon: <HomeIcon/> },
+        { id: 4, value: 'leave', color: 'secondary', icon: <WeekendIcon/> },
+        { id: 5, value: 'sick_leave', color: 'error', icon: <HotelIcon/> },
     ]
 
     return (
@@ -25,14 +25,15 @@ const ShiftTablePopover = ({ anchorEl, onClose, shift }) => {
         >
             <Stack direction="row" spacing={1}>
                 {
-                    array.map(item => (
-                        <Tooltip key={item.title} title={item.title}>
+                    array.map(({ value, color, icon }) => (
+                        <Tooltip key={value} title={value}>
                             <span>
                             <IconButton
-                                disabled={shift === item.title}
-                                color={item.color}
+                                disabled={shiftValue === value}
+                                color={color}
+                                onClick={ e => onClick(value) }
                             >
-                                {item.icon}
+                                {icon}
                             </IconButton>
                             </span>
                         </Tooltip>

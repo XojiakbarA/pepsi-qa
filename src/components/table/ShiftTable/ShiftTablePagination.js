@@ -5,7 +5,7 @@ import YearMonthPicker from "../../input/YearMonthPicker"
 import {useSearchParams} from "react-router-dom"
 
 
-const ShiftTablePagination = ({ date, minDate, maxDate, getMonthName }) => {
+const ShiftTablePagination = ({ date, minDate, maxDate, getMonthName, disabled }) => {
 
     const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
@@ -37,7 +37,7 @@ const ShiftTablePagination = ({ date, minDate, maxDate, getMonthName }) => {
                     color="primary"
                     size={isDownSm ? 'small' : 'medium'}
                     onClick={handlePrevClick}
-                    disabled={isEndPrev}
+                    disabled={isEndPrev || disabled}
                 >
                     <ChevronLeftIcon color="inherit" fontSize="inherit"/>
                 </IconButton>
@@ -49,6 +49,7 @@ const ShiftTablePagination = ({ date, minDate, maxDate, getMonthName }) => {
                 value={params.get('date') || new Date()}
                 onChange={handleDateChange}
                 buttonText={buttonText}
+                disabled={disabled}
             />
             <Tooltip title="Next Month">
                 <span>
@@ -56,7 +57,7 @@ const ShiftTablePagination = ({ date, minDate, maxDate, getMonthName }) => {
                     color="primary"
                     size={isDownSm ? 'small' : 'medium'}
                     onClick={handleNextClick}
-                    disabled={isEndNext}
+                    disabled={isEndNext || disabled}
                 >
                     <ChevronRightIcon color="inherit" fontSize="inherit"/>
                 </IconButton>

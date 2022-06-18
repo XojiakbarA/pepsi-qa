@@ -17,7 +17,7 @@ const ShiftTableHead = ({ monthDays, getDayName }) => {
                 </TableCell>
                 {
                     monthDays.map(day => (
-                        <TableCell key={day.getDate()}>
+                        <TableCell key={day.getDate()} align="center">
                             <Chip
                                 label={day.getDate()}
                                 size={isDownSm ? 'small' : 'medium'}
@@ -34,7 +34,7 @@ const ShiftTableHead = ({ monthDays, getDayName }) => {
                 </TableCell>
                 {
                     monthDays.map(day => (
-                        <TableCell key={day.getDate()}>
+                        <TableCell key={day.getDate()} align="center">
                             <Typography
                                 variant={isDownSm ? 'caption' : 'body2'}
                                 color={ day.getDay() === 0 || day.getDay() === 6 ? 'error' : 'primary' }

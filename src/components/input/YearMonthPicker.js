@@ -5,7 +5,7 @@ import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns"
 import enLocale from "date-fns/locale/en-GB"
 import {useState} from "react"
 
-const YearMonthPicker = ({ minDate, maxDate, value, onChange, buttonText }) => {
+const YearMonthPicker = ({ minDate, maxDate, value, onChange, buttonText, disabled }) => {
 
     const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
@@ -33,6 +33,7 @@ const YearMonthPicker = ({ minDate, maxDate, value, onChange, buttonText }) => {
                                     size={isDownSm ? 'small' : 'medium'}
                                     onClick={ e => setOpen(true) }
                                     endIcon={<EventIcon/>}
+                                    disabled={disabled}
 
                                 >
                                     {buttonText}
