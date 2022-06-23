@@ -6,7 +6,7 @@ import ShiftTablePopover from "./ShiftTablePopover"
 import NoResults from "../../common/NoResults"
 import {useSearchParams} from "react-router-dom"
 import {useState} from "react"
-import { useDispatch } from "react-redux"
+import {useDispatch} from "react-redux"
 import { setShiftValues } from "../../../store/slices/shiftsSlice"
 
 const ShiftTable = ({ shifts, loading }) => {
@@ -16,21 +16,36 @@ const ShiftTable = ({ shifts, loading }) => {
     const [params] = useSearchParams()
 
     const [anchorEl, setAnchorEl] = useState(null)
-    const [shift, setShift] = useState({ id: null, values: [] })
+    const [shift, setShift] = useState({ id: null, index: null, value: null })
+    const [editShifts, setEditShifts] = useState([])
 
     const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
     const handleShiftClick = (e, id, index) => {
-        setShift({ id, values: [ { index, value: null } ] })
+        setShift({ id, index, value: null })
         setAnchorEl(e.currentTarget)
     }
     const handlePopoverClick = (value) => {
-        setShift(prev => ({ ...prev, values: [ { ...prev.values[0], value } ] }))
-        dispatch(setShiftValues({ ...shift, values: [ { ...shift.values[0], value } ] }))
+        dispatch(setShiftValues({ ...shift, value }))
+        setEditShifts(prev => {
+            const editShifts = JSON.parse(JSON.stringify(prev))
+            const editShift = editShifts.find(item => item.id === shift.id)
+            if (editShift) {
+                const editShiftValue = editShift.values.find(item => item.index === shift.index)
+                if (editShiftValue) {
+                    editShiftValue.value = value
+                } else {
+                    editShift.values.push({ index: shift.index, value })
+                }
+            } else {
+                editShifts.push({ id: shift.id, values: [{ index: shift.index, value }] })
+            }
+            return editShifts
+        })
         setAnchorEl(null)
     }
 
-    const shiftValue = shifts.find(item => item.id === shift.id)?.shift_values[shift.values[0].index]
+    const shiftValue = shifts.find(item => item.id === shift.id)?.shift_values[shift.index]
 
     const date = params.get('date') ? new Date(params.get('date')) : new Date()
     const year = date.getFullYear()
@@ -50,6 +65,8 @@ const ShiftTable = ({ shifts, loading }) => {
                 minDate={minDate}
                 maxDate={maxDate}
                 getMonthName={getMonthName}
+                editShifts={editShifts}
+                setEditShifts={setEditShifts}
             />
             { loading && <LinearProgress/> }
             <TableContainer sx={{ minHeight: 500 }}>
@@ -64,7 +81,16 @@ const ShiftTable = ({ shifts, loading }) => {
                         &&
                         shifts.map(shift => (
                             <TableRow key={shift.id}>
-                                <TableCell>
+                                <TableCell
+                                    sx={{
+                                        minWidth: isDownSm ? 130 : 220,
+                                        position: 'sticky',
+                                        left: 0,
+                                        backgroundColor:
+                                        'white',
+                                        zIndex: 1
+                                    }}
+                                >
                                     {shift.user_name}
                                 </TableCell>
                                 <TableCell>

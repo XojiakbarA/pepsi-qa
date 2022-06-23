@@ -7,7 +7,6 @@ const initialState = {
     createLoading: false,
     updateValueLoading: false,
     error: null,
-    mustEdit: []
 }
 
 export const shiftsSlice = createSlice({
@@ -16,22 +15,7 @@ export const shiftsSlice = createSlice({
     reducers: {
         setShiftValues: (state, { payload }) => {
             const shift = state.data.find(shift => shift.id === payload.id)
-            shift.shift_values[payload.values[0].index] = payload.values[0].value
-            const findedShift = state.mustEdit.find(item => item.id === payload.id)
-
-            if (findedShift) {
-                const findedIndex = findedShift.values.find(item => item.index === payload.values[0].index)
-                if (findedIndex) {
-                    findedIndex.value = payload.values[0].value
-                } else {
-                    findedShift.values.push(payload.values[0])
-                }
-            } else {
-                state.mustEdit.push(payload)
-            }
-        },
-        setMustEdit: (state, { payload }) => {
-            state.mustEdit = payload
+            shift.shift_values[payload.index] = payload.value
         }
     },
     extraReducers: builder => {
@@ -72,6 +56,6 @@ export const shiftsSlice = createSlice({
     }
 })
 
-export const { setShiftValues, setMustEdit } = shiftsSlice.actions
+export const { setShiftValues } = shiftsSlice.actions
 
 export default shiftsSlice.reducer

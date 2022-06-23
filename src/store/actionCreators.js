@@ -1,6 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
 import {fetchCaps, fetchContainerSuppliers, fetchCsrfCookie, fetchFactories, fetchFormats, fetchLines, fetchProducts, fetchShiftModes, fetchShifts, fetchTanks, fetchUser, fetchUsers, storeShift, updateShiftValues, userLogin, userLogout, userRegister} from "../api"
-import { setMustEdit } from "./slices/shiftsSlice"
 import {setSnackbar} from "./slices/snackbarSlice"
 
 export const getUser = createAsyncThunk('user/getUser',
@@ -228,11 +227,11 @@ export const createShift = createAsyncThunk('shifts/create',
 )
 
 export const editShiftValues = createAsyncThunk('shifts/editValues',
-    async (data, { dispatch, rejectWithValue }) => {
+    async ({data, setEditShifts}, { dispatch, rejectWithValue }) => {
         try {
             const res = await updateShiftValues(data)
             if (res.status === 200) {
-                dispatch(setMustEdit([]))
+                setEditShifts([])
                 dispatch(setSnackbar({ data: 'Shifts updated successfully!', open: true, color: 'success' }))
             }
         } catch ({ response }) {

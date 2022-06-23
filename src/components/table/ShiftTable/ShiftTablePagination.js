@@ -4,7 +4,6 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import YearMonthPicker from "../../input/YearMonthPicker"
 import {useSearchParams} from "react-router-dom"
 
-
 const ShiftTablePagination = ({ date, minDate, maxDate, getMonthName, disabled }) => {
 
     const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))

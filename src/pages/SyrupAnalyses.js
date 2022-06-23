@@ -6,6 +6,7 @@ import ChemicalReactionIcon from "../components/icons/ChemicalReactionIcon"
 import {DataGrid} from "@mui/x-data-grid"
 import PageHeader from "../components/common/PageHeader"
 import SyrupMorePopover from "../components/popover/SyrupMorePopover"
+import SyrupAnalysisFilter from "../components/common/SyrupAnalysisFilter"
 import {useState} from "react"
 import {useSelector} from "react-redux"
 import {useLocation, useSearchParams} from "react-router-dom"
@@ -13,7 +14,6 @@ import {useAnalyses} from "../hooks/useAnalyses"
 import {baseURL, fetchSyrups} from "../api"
 import {perPagesSelector} from "../store/selectors"
 import {createParamsObject} from "../utils/helpers"
-import SyrupAnalysisFilter from "../components/common/SyrupAnalysisFilter";
 
 const SyrupAnalyses = () => {
 
@@ -192,23 +192,35 @@ const SyrupAnalyses = () => {
             )
         },
         {
-            flex: 1,
-            minWidth: 80,
-            field: 'target',
-            headerName: 'Target',
-            renderCell: ({ row }) => row.inverted_syrup.target
-        },
-        {
             flex: 2,
             minWidth: 80,
             field: 'checked_at',
-            headerName: 'Checked At'
+            headerName: 'Checked At',
+            renderCell: ({ row }) => (
+                <Stack spacing={2} divider={<Divider/>}>
+                    <Typography variant="body2">{row.checked_at}</Typography>
+                    { selectionModel[0] && selectionModel[0] === row.id && <Typography variant="body2">{row.inverted_syrup.checked_at}</Typography> }
+                </Stack>
+            )
         },
         {
             flex: 2,
             minWidth: 80,
             field: 'checked_by',
-            headerName: 'Checked By'
+            headerName: 'Checked By',
+            renderCell: ({ row }) => (
+                <Stack spacing={2} divider={<Divider/>}>
+                    <Typography variant="body2">{row.checked_by}</Typography>
+                    { selectionModel[0] && selectionModel[0] === row.id && <Typography variant="body2">{row.inverted_syrup.checked_by}</Typography> }
+                </Stack>
+            )
+        },
+        {
+            flex: 1,
+            minWidth: 80,
+            field: 'target',
+            headerName: 'Target',
+            renderCell: ({ row }) => row.inverted_syrup.target
         },
     ]
 

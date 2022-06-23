@@ -28,6 +28,7 @@ const YearMonthPicker = ({ minDate, maxDate, value, onChange, buttonText, disabl
                         <div ref={ref}>
                             <TextField {...inputProps} ref={inputRef} type="hidden" variant="standard"/>
                             <Tooltip title="Select Date">
+                                <span>
                                 <Button
                                     sx={{ whiteSpace: 'nowrap' }}
                                     size={isDownSm ? 'small' : 'medium'}
@@ -38,6 +39,7 @@ const YearMonthPicker = ({ minDate, maxDate, value, onChange, buttonText, disabl
                                 >
                                     {buttonText}
                                 </Button>
+                                </span>
                             </Tooltip>
                         </div>
 

@@ -12,6 +12,9 @@ import ScheduleIcon from "../../icons/ScheduleIcon"
 import {Link, useLocation} from "react-router-dom"
 
 const menu = [
+    { title: 'Shift Schedule', path: '/shift-schedule', icon: <ScheduleIcon/>  },
+]
+const menu2 = [
     { title: 'Water Analyses', path: '/water-analyses', icon: <WaterIcon/>  },
     { title: 'Syrup Analyses', path: '/syrup-analyses', icon: <ChemicalReactionIcon/> },
     { title: 'Physical-Chemical Analyses', path: '/physical-chemical-analyses', icon: <ChemicalIcon/> },
@@ -20,9 +23,7 @@ const menu = [
     { title: 'Secure Seal Tests', path: '/secure-seal-tests', icon: <BarometerIcon/>  },
     { title: 'Burst Tests', path: '/burst-tests', icon: <BrokenIcon/>  },
 ]
-const menu2 = [
-    { title: 'Shift Schedule', path: '/shift-schedule', icon: <ScheduleIcon/>  },
-]
+
 
 const Sidebar = ({ open, handleCloseClick }) => {
 
@@ -37,7 +38,6 @@ const Sidebar = ({ open, handleCloseClick }) => {
             </Stack>
             <Divider/>
             <List>
-                <ListSubheader>Analyses</ListSubheader>
                 {
                     menu.map(({ title, path, icon }) => (
                         <ListItem key={title} disablePadding>
@@ -59,6 +59,7 @@ const Sidebar = ({ open, handleCloseClick }) => {
             </List>
             <Divider/>
             <List>
+                <ListSubheader>Analyses</ListSubheader>
                 {
                     menu2.map(({ title, path, icon }) => (
                         <ListItem key={title} disablePadding>

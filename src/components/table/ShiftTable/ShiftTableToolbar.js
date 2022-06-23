@@ -12,7 +12,7 @@ import {createIDsValue, createParamsObject} from "../../../utils/helpers"
 import { editShiftValues } from "../../../store/actionCreators"
 import { LoadingButton } from "@mui/lab"
 
-const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName }) => {
+const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName, editShifts, setEditShifts }) => {
 
     const dispatch = useDispatch()
 
@@ -22,7 +22,7 @@ const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName }) => {
 
     const [params, setParams] = useSearchParams()
 
-    const { loading, updateValueLoading, mustEdit } = useSelector(state => state.shifts)
+    const { loading, updateValueLoading } = useSelector(state => state.shifts)
     const users = useSelector(state => state.users.data)
 
     const userValue = createIDsValue('user_ids', users, params)
@@ -34,7 +34,7 @@ const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName }) => {
         setParams({ ...prevParams, [field]: ids })
     }
     const handleSaveClick = () => {
-        dispatch(editShiftValues({ shifts: mustEdit }))
+        dispatch(editShiftValues({ data: { shifts: editShifts }, setEditShifts }))
     }
 
     return (
@@ -71,7 +71,7 @@ const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName }) => {
                         <LoadingButton
                             size={isDownSm ? 'small' : 'medium'}
                             endIcon={<SaveIcon/>}
-                            disabled={!mustEdit.length}
+                            disabled={!editShifts.length}
                             loading={updateValueLoading}
                             onClick={handleSaveClick}
                         >

@@ -14,16 +14,7 @@ import ShiftSchedule from "./pages/ShiftSchedule"
 import MySnackbar from "./components/common/MySnackbar"
 import {useEffect} from "react"
 import {useDispatch} from "react-redux"
-import {
-    getCaps,
-    getContainerSuppliers, getFactories,
-    getFormats,
-    getLines,
-    getProducts, getShiftModes,
-    getTanks,
-    getUser,
-    getUsers
-} from "./store/actionCreators"
+import {getCaps,getContainerSuppliers, getFactories, getFormats, getLines, getProducts, getShiftModes, getTanks, getUser, getUsers} from "./store/actionCreators"
 
 function App() {
 
