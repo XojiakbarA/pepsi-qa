@@ -5,6 +5,8 @@ import Auth from "./pages/Auth"
 import Home from "./pages/Home"
 import SyrupAnalyses from "./pages/SyrupAnalyses"
 import PhysicalChemicalAnalyses from "./pages/PhysicalChemicalAnalyses"
+import CarbonatedDrinks from "./pages/PhysicalChemicalAnalyses/CarbonatedDrinks"
+import NonCarbonatedDrinks from "./pages/PhysicalChemicalAnalyses/NonCarbonatedDrinks"
 import RemovalTorqueAnalyses from "./pages/RemovalTorqueAnalyses"
 import SectionWeightAnalyses from "./pages/SectionWeightAnalyses"
 import WaterAnalyses from "./pages/WaterAnalyses"
@@ -39,17 +41,19 @@ function App() {
             <Route path="/" element={<MainLayout/>}>
                 <Route element={<ProtectedRoute/>}>
                     <Route index element={<Home/>}/>
-                    <Route path="/syrup-analyses" element={<SyrupAnalyses/>}/>
-                    <Route path="/physical-chemical-analyses" element={<PhysicalChemicalAnalyses/>}/>
-                    <Route path="/removal-torque-analyses" element={<RemovalTorqueAnalyses/>}/>
-                    <Route path="/section-weight-analyses" element={<SectionWeightAnalyses/>}/>
-                    <Route path="/water-analyses" element={<WaterAnalyses/>}/>
-                    <Route path="/secure-seal-tests" element={<SecureSealTests/>}/>
-                    <Route path="/burst-tests" element={<BurstTests/>}/>
-                    <Route path="/shift-schedule" element={<ShiftSchedule/>}/>
+                    <Route path="shift-schedule" element={<ShiftSchedule/>}/>
+                    <Route path="water-analyses" element={<WaterAnalyses/>}/>
+                    <Route path="syrup-analyses" element={<SyrupAnalyses/>}/>
+                    <Route path="physical-chemical-analyses" element={<PhysicalChemicalAnalyses/>}/>
+                    <Route path="physical-chemical-analyses/carbonated-drinks" element={<CarbonatedDrinks/>}/>
+                    <Route path="physical-chemical-analyses/non-carbonated-drinks" element={<NonCarbonatedDrinks/>}/>
+                    <Route path="removal-torque-analyses" element={<RemovalTorqueAnalyses/>}/>
+                    <Route path="section-weight-analyses" element={<SectionWeightAnalyses/>}/>
+                    <Route path="secure-seal-tests" element={<SecureSealTests/>}/>
+                    <Route path="burst-tests" element={<BurstTests/>}/>
                 </Route>
             </Route>
-            <Route path="/auth" element={<Auth/>}/>
+            <Route path="auth" element={<Auth/>}/>
         </Routes>
         <MySnackbar/>
         </>

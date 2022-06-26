@@ -37,3 +37,17 @@ export const createShiftButtons = (sequence) => {
         }
     })
 }
+
+export const toUpperCaseFirstLetters = (string) => {
+    const arr = []
+    let index = 0
+    while (index !== -1) {
+        index = string.indexOf('-', index + 1)
+        arr.push(index + 1)
+    }
+
+    return string.split('').map((item, i) => {
+        if (arr.includes(i)) return item.toUpperCase()
+        return item
+    }).join('')
+}

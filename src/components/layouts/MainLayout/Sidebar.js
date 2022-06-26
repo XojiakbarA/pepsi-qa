@@ -12,22 +12,24 @@ import ScheduleIcon from "../../icons/ScheduleIcon"
 import {Link, useLocation} from "react-router-dom"
 
 const menu = [
-    { title: 'Shift Schedule', path: '/shift-schedule', icon: <ScheduleIcon/>  },
+    { title: 'Shift Schedule', path: 'shift-schedule', icon: <ScheduleIcon/>  },
 ]
 const menu2 = [
-    { title: 'Water Analyses', path: '/water-analyses', icon: <WaterIcon/>  },
-    { title: 'Syrup Analyses', path: '/syrup-analyses', icon: <ChemicalReactionIcon/> },
-    { title: 'Physical-Chemical Analyses', path: '/physical-chemical-analyses', icon: <ChemicalIcon/> },
-    { title: 'Removal Torque Analyses', path: '/removal-torque-analyses', icon: <CapIcon/> },
-    { title: 'Section Weight Analyses', path: '/section-weight-analyses', icon: <BottleIcon/>  },
-    { title: 'Secure Seal Tests', path: '/secure-seal-tests', icon: <BarometerIcon/>  },
-    { title: 'Burst Tests', path: '/burst-tests', icon: <BrokenIcon/>  },
+    { title: 'Water Analyses', path: 'water-analyses', icon: <WaterIcon/>  },
+    { title: 'Syrup Analyses', path: 'syrup-analyses', icon: <ChemicalReactionIcon/> },
+    { title: 'Physical-Chemical Analyses', path: 'physical-chemical-analyses', icon: <ChemicalIcon/> },
+    { title: 'Removal Torque Analyses', path: 'removal-torque-analyses', icon: <CapIcon/> },
+    { title: 'Section Weight Analyses', path: 'section-weight-analyses', icon: <BottleIcon/>  },
+    { title: 'Secure Seal Tests', path: 'secure-seal-tests', icon: <BarometerIcon/>  },
+    { title: 'Burst Tests', path: 'burst-tests', icon: <BrokenIcon/>  },
 ]
 
 
 const Sidebar = ({ open, handleCloseClick }) => {
 
     const location = useLocation()
+
+    const pathnames = location.pathname.split('/').filter(p => p)
 
     return (
         <Drawer open={open} onClose={handleCloseClick}>
@@ -45,7 +47,7 @@ const Sidebar = ({ open, handleCloseClick }) => {
                                 onClick={handleCloseClick}
                                 component={Link}
                                 to={path}
-                                selected={path === location.pathname}
+                                selected={path === pathnames[0]}
                             >
                                 <ListItemIcon>{icon}</ListItemIcon>
                                 <ListItemText
@@ -67,7 +69,7 @@ const Sidebar = ({ open, handleCloseClick }) => {
                                 onClick={handleCloseClick}
                                 component={Link}
                                 to={path}
-                                selected={path === location.pathname}
+                                selected={path === pathnames[0]}
                             >
                                 <ListItemIcon>{icon}</ListItemIcon>
                                 <ListItemText

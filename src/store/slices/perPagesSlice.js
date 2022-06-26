@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit"
 
 const initialState = {
-    singleTable: [10, 25, 50],
+    singleTable: [20, 40, 60],
     multiTable: [6, 12, 18]
 }
 

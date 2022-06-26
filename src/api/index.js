@@ -51,6 +51,14 @@ export const fetchPhysicalChemicalAnalyses = async (params) => {
     return await instance.get(`api/physical-chemical-analyses`, { params })
 }
 
+export const fetchCarbonatedAnalyses = async (params) => {
+    return await instance.get(`api/carbonated-analyses`, { params })
+}
+
+export const fetchNonCarbonatedAnalyses = async (params) => {
+    return await instance.get(`api/non-carbonated-analyses`, { params })
+}
+
 export const fetchRemovalTorqueAnalyses = async (params) => {
     return await instance.get(`api/removal-torque-analyses`, { params })
 }
