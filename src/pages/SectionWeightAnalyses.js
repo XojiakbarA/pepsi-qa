@@ -1,6 +1,5 @@
 import {CircularProgress, Grid, Stack} from "@mui/material"
 import {DataGrid} from "@mui/x-data-grid"
-import BottleIcon from "../components/icons/BottleIcon"
 import PageHeader from "../components/common/PageHeader"
 import PageFooter from "../components/common/PageFooter"
 import MyGridToolbar from "../components/data-grid/MyGridToolbar"
@@ -52,11 +51,7 @@ const SectionWeightAnalyses = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <PageHeader
-                    icon={<BottleIcon width={40}/>}
-                    title="Section Weight Analyses"
-                    rightComponent={<ProductAnalysisFilters/>}
-                />
+                <PageHeader rightComponent={<ProductAnalysisFilters/>}/>
             </Grid>
             <Grid item xs={12}>
                 <Stack spacing={2}>

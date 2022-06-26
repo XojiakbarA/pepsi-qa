@@ -1,5 +1,4 @@
 import {Grid} from "@mui/material"
-import ScheduleIcon from "../components/icons/ScheduleIcon"
 import PageHeader from "../components/common/PageHeader"
 import ShiftTable from "../components/table/ShiftTable"
 import {useSearchParams} from "react-router-dom"
@@ -22,10 +21,7 @@ const ShiftSchedule = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <PageHeader
-                    icon={<ScheduleIcon width={40}/>}
-                    title="Shift Schedule"
-                />
+                <PageHeader/>
             </Grid>
             <Grid item xs={12}>
                 {

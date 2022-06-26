@@ -1,6 +1,5 @@
 import {CircularProgress, Grid, Stack} from "@mui/material"
 import {DataGrid} from "@mui/x-data-grid"
-import CapIcon from "../components/icons/CapIcon"
 import PageHeader from "../components/common/PageHeader"
 import PageFooter from "../components/common/PageFooter"
 import MyGridToolbar from "../components/data-grid/MyGridToolbar"
@@ -40,11 +39,7 @@ const RemovalTorqueAnalyses = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <PageHeader
-                    icon={<CapIcon width={40}/>}
-                    title="Removal Torque Analyses"
-                    rightComponent={<ProductAnalysisFilters/>}
-                />
+                <PageHeader rightComponent={<ProductAnalysisFilters/>}/>
             </Grid>
             <Grid item xs={12}>
                 <Stack spacing={2}>

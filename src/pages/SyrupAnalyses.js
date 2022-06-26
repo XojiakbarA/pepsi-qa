@@ -227,11 +227,7 @@ const SyrupAnalyses = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <PageHeader
-                    icon={<ChemicalReactionIcon width={40}/>}
-                    title="Syrup Analyses"
-                    rightComponent={<SyrupAnalysisFilter/>}
-                />
+                <PageHeader rightComponent={<SyrupAnalysisFilter/>}/>
             </Grid>
             <Grid item xs={12}>
                 <DataGrid

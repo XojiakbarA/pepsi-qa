@@ -6,7 +6,6 @@ import MyGridToolbar from "../components/data-grid/MyGridToolbar"
 import PageHeader from "../components/common/PageHeader"
 import PageFooter from "../components/common/PageFooter"
 import NoResults from "../components/common/NoResults"
-import BrokenIcon from "../components/icons/BrokenIcon"
 import ProductAnalysisFilters from "../components/common/ProductAnalysisFilters"
 import {useSearchParams} from "react-router-dom"
 import {useAnalyses} from "../hooks/useAnalyses"
@@ -43,11 +42,7 @@ const BurstTests = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <PageHeader
-                    icon={<BrokenIcon width={40}/>}
-                    title="Burst Tests"
-                    rightComponent={<ProductAnalysisFilters/>}
-                />
+                <PageHeader rightComponent={<ProductAnalysisFilters/>}/>
             </Grid>
             <Grid item xs={12}>
                 <Stack spacing={2}>

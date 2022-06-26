@@ -1,15 +1,16 @@
-import {Stack, Typography, useMediaQuery} from "@mui/material"
+import {Stack} from "@mui/material"
+import MyBreadcrumbs from "./MyBreadcrumbs"
 
-const PageHeader = ({ title, icon, rightComponent, justifyContent, alignItems, variant }) => {
-
-    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
+const PageHeader = ({ rightComponent, justifyContent, alignItems }) => {
 
     return (
-        <Stack direction="row" justifyContent={justifyContent ?? 'space-between'} alignItems={alignItems ?? 'center'}>
-            <Stack direction="row" spacing={2} alignItems="center">
-                {icon}
-                <Typography variant={isDownSm ? 'body1' : variant ?? 'h5'}>{title}</Typography>
-            </Stack>
+        <Stack
+            direction="row"
+            justifyContent={justifyContent ?? 'space-between'}
+            alignItems={alignItems ?? 'flex-start'}
+            minHeight={40}
+        >
+            <MyBreadcrumbs/>
             {rightComponent}
         </Stack>
     )

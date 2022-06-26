@@ -1,5 +1,4 @@
 import {Grid, LinearProgress} from "@mui/material"
-import WaterIcon from "../components/icons/WaterIcon"
 import PageHeader from "../components/common/PageHeader"
 import {DataGrid} from "@mui/x-data-grid"
 import WaterAnalysisFilters from "../components/common/WaterAnalysisFilters"
@@ -109,11 +108,7 @@ const WaterAnalyses = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <PageHeader
-                    icon={<WaterIcon width={40}/>}
-                    title="Water Analyses"
-                    rightComponent={<WaterAnalysisFilters/>}
-                />
+                <PageHeader rightComponent={<WaterAnalysisFilters/>}/>
             </Grid>
             <Grid item xs={12}>
                 <DataGrid

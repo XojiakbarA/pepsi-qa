@@ -6,7 +6,6 @@ import MyGridToolbar from "../components/data-grid/MyGridToolbar"
 import PageHeader from "../components/common/PageHeader"
 import PageFooter from "../components/common/PageFooter"
 import NoResults from "../components/common/NoResults"
-import BarometerIcon from "../components/icons/BarometerIcon"
 import ProductAnalysisFilters from "../components/common/ProductAnalysisFilters"
 import {useSearchParams} from "react-router-dom"
 import {useAnalyses} from "../hooks/useAnalyses"
@@ -44,11 +43,7 @@ const SecureSealTests = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <PageHeader
-                    icon={<BarometerIcon width={40}/>}
-                    title="Secure Seal Tests"
-                    rightComponent={<ProductAnalysisFilters/>}
-                />
+                <PageHeader rightComponent={<ProductAnalysisFilters/>}/>
             </Grid>
             <Grid item xs={12}>
                 <Stack spacing={2}>
