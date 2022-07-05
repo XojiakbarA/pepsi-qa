@@ -14,24 +14,24 @@ const PhysicalChemicalAnalyses = () => {
             <Grid item xs={12}>
                 <PageHeader/>
             </Grid>
-                <Grid item>
-                    <AnalysesTypeCard
-                        title="Carbonated Drinks"
-                        subtitle="Results of physical-chemical analyses of carbonated drinks"
-                        chips={carbonatedProducts}
-                        component={Link}
-                        to="/physical-chemical-analyses/carbonated-drinks"
-                    />
-                </Grid>
-                <Grid item>
-                    <AnalysesTypeCard
-                        title="Non-Carbonated Drinks"
-                        subtitle="Results of physical-chemical analyses of non-carbonated drinks"
-                        chips={nonCarbonatedProducts}
-                        component={Link}
-                        to="/physical-chemical-analyses/non-carbonated-drinks"
-                    />
-                </Grid>
+            <Grid item xs={6}>
+                <AnalysesTypeCard
+                    title="Carbonated Drinks"
+                    subtitle="Results of physical-chemical analyses of carbonated drinks"
+                    chips={carbonatedProducts}
+                    component={Link}
+                    to="/physical-chemical-analyses/carbonated-drinks"
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <AnalysesTypeCard
+                    title="Non-Carbonated Drinks"
+                    subtitle="Results of physical-chemical analyses of non-carbonated drinks"
+                    chips={nonCarbonatedProducts}
+                    component={Link}
+                    to="/physical-chemical-analyses/non-carbonated-drinks"
+                />
+            </Grid>
             </Grid>
     )
 }

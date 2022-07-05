@@ -59,7 +59,7 @@ const ShiftTable = ({ shifts, loading }) => {
     const getMonthName = (month, date) => new Intl.DateTimeFormat('en-US', { month }).format(date)
 
     return (
-        <Paper>
+        <Paper sx={{ mb: 2 }}>
             <ShiftTableToolbar
                 date={date}
                 minDate={minDate}

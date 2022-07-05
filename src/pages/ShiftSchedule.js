@@ -24,9 +24,7 @@ const ShiftSchedule = () => {
                 <PageHeader/>
             </Grid>
             <Grid item xs={12}>
-                {
-                    <ShiftTable shifts={data} loading={loading}/>
-                }
+                <ShiftTable shifts={data} loading={loading}/>
             </Grid>
         </Grid>
     )

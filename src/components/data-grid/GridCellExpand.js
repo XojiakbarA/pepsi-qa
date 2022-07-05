@@ -74,9 +74,9 @@ const GridCellExpand = memo(function GridCellExpand({ width, value, children }) 
             {children}
             <Box
                 ref={cellValue}
-                sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                sx={{ml: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
             >
-                {value ?? '-'}
+                {value}
             </Box>
             {showPopper && (
                 <Popper
@@ -86,6 +86,7 @@ const GridCellExpand = memo(function GridCellExpand({ width, value, children }) 
                 >
                     <Paper
                         elevation={1}
+                        sx={{ p: 1 }}
                         // style={{ minHeight: wrapper.current.offsetHeight - 3 }}
                     >
                         <Typography variant="body2" sx={{ padding: 1, whiteSpace: 'nowrap' }}>

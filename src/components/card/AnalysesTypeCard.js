@@ -6,8 +6,8 @@ const AnalysesTypeCard = ({ title, subtitle, chips, component, to }) => {
     const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
     return (
-        <Card sx={{ maxWidth: 500 }}>
-            <CardActionArea component={component} to={to}>
+        <Card sx={{ width: '100%', height: '100%' }}>
+            <CardActionArea component={component} to={to} sx={{ height: '100%' }}>
                 <CardContent>
                     <Stack spacing={2}>
                         <Typography gutterBottom variant={isDownSm ? "h6" : "h5"} component="div">

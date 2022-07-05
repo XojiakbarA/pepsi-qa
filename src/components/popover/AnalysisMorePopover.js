@@ -7,8 +7,8 @@ const AnalysisMorePopover = ({ anchorEl, onClose, analysis }) => {
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={onClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
         >
             <List dense sx={{ width: 300 }}>
                 <ListItem>

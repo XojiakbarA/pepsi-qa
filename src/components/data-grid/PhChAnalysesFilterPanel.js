@@ -10,7 +10,7 @@ import {useSearchParams} from "react-router-dom"
 import {useSelector} from "react-redux"
 import {createParamsObject, createIDsValue} from "../../utils/helpers"
 
-const ProductAnalysesFilterPanel = () => {
+const PhChAnalysesFilterPanel = () => {
 
     const [ params, setParams ] = useSearchParams()
 
@@ -147,4 +147,4 @@ const ProductAnalysesFilterPanel = () => {
     )
 }
 
-export default ProductAnalysesFilterPanel
+export default PhChAnalysesFilterPanel

@@ -1,11 +1,11 @@
-import { Box, Grid, Stack, Typography } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 import PageHeader from "../../components/common/PageHeader"
-import ProductAnalysesDataGrid from "../../components/data-grid/ProductAnalysesDataGrid"
-import ProductAnalysesFilterPanel from "../../components/data-grid/ProductAnalysesFilterPanel"
+import PhChAnalysesDataGrid from "../../components/data-grid/PhChAnalysesDataGrid"
+import PhChAnalysesFilterPanel from "../../components/data-grid/PhChAnalysesFilterPanel"
 import { useSearchParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { useAnalyses } from "../../hooks/useAnalyses"
-import { baseURL, fetchCarbonatedAnalyses } from "../../api"
+import { fetchCarbonatedAnalyses } from "../../api"
 import { perPagesSelector } from "../../store/selectors"
 import { createParamsObject } from "../../utils/helpers"
 
@@ -110,43 +110,14 @@ const CarbonatedDrinks = () => {
         setParams({ ...prevParams, page })
     }
 
-    const getGroupedRows = () => (
-        data
-            .map(item => item.syrup_name)
-            .filter((item, i, self) => self.indexOf(item) === i)
-            .map(item => {
-                const row = data.find(row => row.syrup_name === item)
-                const checked_ats = data.filter(row => row.syrup_name === item).map(row => new Date(row.checked_at).getTime())
-                const checked_at = new Date(Math.min(...checked_ats))
-                return {
-                    id: row.syrup_id + item,
-                    syrup_name: row.syrup_name,
-                    product_logo: row.product_logo,
-                    target: row.target,
-                    checked_at: checked_at,
-                    isGroupRow: true
-                }
-            })
-    )
-    const groupByRenderCell = (row) => (
-        <Stack direction="row" spacing={4} alignItems="center">
-            <Stack direction="row" spacing={1} alignItems="center">
-                <img src={baseURL + row.product_logo} alt="syrup-logo" width={30}/>
-                <Typography variant="body2">{row.syrup_name}</Typography>
-            </Stack>
-            <Typography variant="body2">Target: {row.target}</Typography>
-            <Typography variant="body2">Checked At: {new Date(row.checked_at).toLocaleDateString()}</Typography>
-        </Stack>
-    )
-
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <PageHeader/>
             </Grid>
             <Grid item xs={12}>
-                <Box height={550}>
-                    <ProductAnalysesDataGrid
+                <Box height={550} mb={2}>
+                    <PhChAnalysesDataGrid
                         columns={columns}
                         rows={data}
                         loading={loading}
@@ -154,12 +125,10 @@ const CarbonatedDrinks = () => {
                         rowPerPageOptions={rowPerPageOptions}
                         pageSize={pageSize}
                         onPageSizeChange={handlePageSizeChange}
-                        page={page}
+                        page={page - 1}
                         onPageChange={handlePageChange}
                         groupBy="syrup_name"
-                        getGroupedRows={getGroupedRows}
-                        groupByRenderCell={groupByRenderCell}
-                        FilterPanel={ProductAnalysesFilterPanel}
+                        FilterPanel={PhChAnalysesFilterPanel}
                     />
                 </Box>
             </Grid>

@@ -6,15 +6,19 @@ import BarometerIcon from "../icons/BarometerIcon"
 import BrokenIcon from "../icons/BrokenIcon"
 import {Link} from "react-router-dom";
 
-const menu = [
-    { title: 'Physical-Chemical Analyses', path: '/physical-chemical-analyses', icon: <ChemicalIcon/> },
-    { title: 'Removal Torque Analyses', path: '/removal-torque-analyses', icon: <CapIcon/> },
-    { title: 'Section Weight Analyses', path: '/section-weight-analyses', icon: <BottleIcon/>  },
-    { title: 'Secure Seal Tests', path: '/secure-seal-tests', icon: <BarometerIcon/>  },
-    { title: 'Burst Tests', path: '/burst-tests', icon: <BrokenIcon/>  },
-]
+const SyrupMorePopover = ({ anchorEl, syrup, onClose }) => {
 
-const SyrupMorePopover = ({ anchorEl, syrup_id, onClose }) => {
+    const menu = [
+        {
+            title: 'Physical-Chemical Analyses',
+            path: `/physical-chemical-analyses/${syrup?.carbonated ? 'carbonated-drinks' : 'non-carbonated-drinks'}`,
+            icon: <ChemicalIcon/>
+        },
+        { title: 'Removal Torque Analyses', path: '/removal-torque-analyses', icon: <CapIcon/> },
+        { title: 'Section Weight Analyses', path: '/section-weight-analyses', icon: <BottleIcon/>  },
+        { title: 'Secure Seal Tests', path: '/secure-seal-tests', icon: <BarometerIcon/>  },
+        { title: 'Burst Tests', path: '/burst-tests', icon: <BrokenIcon/>  },
+    ]
 
     return (
         <Popover
@@ -30,7 +34,7 @@ const SyrupMorePopover = ({ anchorEl, syrup_id, onClose }) => {
                         <ListItem key={title} disablePadding>
                             <ListItemButton
                                 component={Link}
-                                to={`${path}?syrup_id=${syrup_id}`}
+                                to={`${path}?syrup_id=${syrup?.id}`}
                             >
                                 <ListItemIcon>
                                     {icon}

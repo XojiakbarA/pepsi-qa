@@ -1,7 +1,7 @@
-import {Grid, LinearProgress} from "@mui/material"
+import {Box, Grid, LinearProgress} from "@mui/material"
 import PageHeader from "../components/common/PageHeader"
-import {DataGrid} from "@mui/x-data-grid"
-import WaterAnalysisFilters from "../components/common/WaterAnalysisFilters"
+import {DataGrid, GridToolbar} from "@mui/x-data-grid"
+import WaterAnalysisFilterPanel from "../components/data-grid/WaterAnalysisFilterPanel"
 import {useSearchParams} from "react-router-dom"
 import {useSelector} from "react-redux"
 import {useAnalyses} from "../hooks/useAnalyses"
@@ -88,11 +88,11 @@ const WaterAnalyses = () => {
 
     const [params, setParams] = useSearchParams()
 
-    const { singleTable: perPageOptions } = useSelector(perPagesSelector)
+    const { singleTable: rowPerPageOptions } = useSelector(perPagesSelector)
 
     const { data, meta, loading } = useAnalyses(params, fetchWaterAnalyses)
 
-    const pageSize = Number(params.get('per_page')) || 10
+    const pageSize = Number(params.get('per_page') || rowPerPageOptions[0])
     const page = Number(params.get('page') || 1)
 
     const handlePageSizeChange = (per_page) => {
@@ -108,24 +108,32 @@ const WaterAnalyses = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <PageHeader rightComponent={<WaterAnalysisFilters/>}/>
+                <PageHeader/>
             </Grid>
             <Grid item xs={12}>
-                <DataGrid
-                    autoHeight
-                    disableColumnMenu
-                    loading={loading}
-                    columns={columns}
-                    rows={data}
-                    rowCount={meta.total || 100}
-                    page={page - 1}
-                    pageSize={pageSize}
-                    rowsPerPageOptions={perPageOptions}
-                    onPageSizeChange={handlePageSizeChange}
-                    onPageChange={handlePageChange}
-                    paginationMode="server"
-                    components={{ LoadingOverlay: LinearProgress }}
-                />
+                <Box height={550} mb={2}>
+                    <DataGrid
+                        disableColumnMenu
+                        loading={loading}
+                        columns={columns}
+                        rows={data}
+                        rowCount={meta.total || 100}
+                        page={page - 1}
+                        pageSize={pageSize}
+                        rowsPerPageOptions={rowPerPageOptions}
+                        onPageSizeChange={handlePageSizeChange}
+                        onPageChange={handlePageChange}
+                        paginationMode="server"
+                        components={{
+                            Toolbar: GridToolbar,
+                            FilterPanel: WaterAnalysisFilterPanel,
+                            LoadingOverlay: LinearProgress
+                        }}
+                        componentsProps={{
+                            panel: { sx: { maxWidth: 'calc(100% - 32px)', maxHeight: 'calc(100% - 32px)' } }
+                        }}
+                    />
+                </Box>
             </Grid>
         </Grid>
     )

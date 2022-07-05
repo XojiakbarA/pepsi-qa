@@ -1,58 +1,52 @@
-import {Divider, IconButton, Link, Stack, Tooltip, Typography} from "@mui/material"
+import {Divider, IconButton, Stack, Tooltip, Typography, useMediaQuery} from "@mui/material"
 import {GridToolbarContainer} from "@mui/x-data-grid"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
-import {Link as RouterLink} from "react-router-dom"
 import AnalysisMorePopover from "../popover/AnalysisMorePopover"
+import SyrupLink from "../links/SyrupLink"
 import {useState} from "react"
-import {useSelector} from "react-redux"
-import {baseURL} from "../../api"
-import {perPagesSelector} from "../../store/selectors"
 
 const MyGridToolbar = ({ analysis }) => {
 
     const [anchorEl, setAnchorEl] = useState(null)
 
-    const { singleTable } = useSelector(perPagesSelector)
+    const isDownMd = useMediaQuery((theme) => theme.breakpoints.down('md'))
 
     return (
-        <GridToolbarContainer sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+        <GridToolbarContainer>
             <Stack
-                alignSelf="end"
-                alignItems="center"
-                direction="row"
+                alignItems={ isDownMd ? "start" : "center" }
+                direction={ isDownMd ? "column" : "row" }
                 spacing={1}
-                divider={<Divider orientation="vertical" flexItem/>}
+                divider={<Divider orientation={ isDownMd ? "horizontal" : "vertical" } flexItem/>}
             >
-                <Stack direction="row" alignItems="center" spacing={1}>
-                    <img src={baseURL + analysis.product_logo} alt="syrup-logo" width={30}/>
-                    <Link
-                        component={RouterLink}
-                        to={`/syrup-analyses?page=${Math.ceil(analysis.syrup_id/singleTable[0])}`}
-                        state={{ syrup_id: analysis.syrup_id }}
-                    >
-                        <Typography variant="body2">
-                            {`${analysis.product_name} ${analysis.syrup_id}`}
-                        </Typography>
-                    </Link>
-                </Stack>
-                <Typography variant="body2">
-                    Checked at: {analysis.checked_at}
-                </Typography>
-                {
-                    analysis.target &&
-                    <Typography variant="body2">
-                        Target: {analysis.target}
-                    </Typography>
-                }
                 <Tooltip title="More">
                     <IconButton
                         size="small"
                         color="primary"
                         onClick={ e => setAnchorEl(e.currentTarget) }
                     >
-                        <MoreVertIcon fontSize="small" color="primary"/>
+                        <MoreVertIcon fontSize="inherit" color="primary"/>
                     </IconButton>
                 </Tooltip>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                    <Typography variant="body2">Syrup:</Typography>
+                    <SyrupLink
+                        src={analysis.product_logo}
+                        id={analysis.syrup_id}
+                    >
+                        {`${analysis.product_name} ${analysis.syrup_id}`}
+                    </SyrupLink>
+                </Stack>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                    <Typography variant="body2">Checked At:</Typography>
+                    <Typography variant="body2" color="primary">{analysis.checked_at}</Typography>
+                </Stack>
+                {
+                    analysis.target &&
+                    <Typography variant="body2">
+                        Target: {analysis.target}
+                    </Typography>
+                }
             </Stack>
             <AnalysisMorePopover
                 anchorEl={anchorEl}

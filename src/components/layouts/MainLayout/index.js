@@ -19,7 +19,6 @@ const MainLayout = () => {
             <Container maxWidth="xl">
                 <Outlet/>
             </Container>
-            <Toolbar/>
         </Box>
     );
 }

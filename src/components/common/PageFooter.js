@@ -24,7 +24,7 @@ const PageFooter = ({ meta }) => {
     }
 
     return (
-        <Box display="flex" justifyContent="flex-end">
+        <Box display="flex" justifyContent="flex-end" mb={2}>
             <Stack
                 spacing={2}
                 direction={isDownSm ? "column-reverse" : "row"}

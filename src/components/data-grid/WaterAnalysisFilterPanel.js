@@ -1,20 +1,13 @@
-import {Button, Grid, IconButton, Popover, Stack, TextField, useMediaQuery} from "@mui/material"
-import FilterAltIcon from "@mui/icons-material/FilterAlt"
-import CloseIcon from "@mui/icons-material/Close"
+import {Grid, Paper, TextField} from "@mui/material"
 import DateTimeRangePicker from "../input/DateTimeRangePicker"
 import AutocompleteInput from "../input/AutocompleteInput"
 import RangeInput from "../input/RangeInput"
 import RenderUserTag from "../input/AutocompleteInput/RenderUserTag"
-import {useState} from "react"
 import {useSearchParams} from "react-router-dom"
 import {useSelector} from "react-redux"
 import {createParamsObject, createRangeValue, createIDsValue} from "../../utils/helpers"
 
-const WaterAnalysisFilters = () => {
-
-    const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
-
-    const [anchorEl, setAnchorEl] = useState(null)
+const WaterAnalysisFilterPanel = () => {
 
     const [params, setParams] = useSearchParams()
 
@@ -58,28 +51,7 @@ const WaterAnalysisFilters = () => {
     }
 
     return (
-        <>
-        <Button
-            size={isDownSm ? 'small' : 'medium'}
-            variant="contained"
-            startIcon={<FilterAltIcon/>}
-            onClick={ e => setAnchorEl(e.currentTarget) }
-        >
-            Filters
-        </Button>
-        <Popover
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={ e => setAnchorEl(null) }
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            PaperProps={{ sx: { padding: 1 } }}
-        >
-            <Stack direction="row" justifyContent="end">
-                <IconButton size="small" onClick={ e => setAnchorEl(null) }>
-                    <CloseIcon fontSize="small"/>
-                </IconButton>
-            </Stack>
+        <Paper sx={{ p: 2 }}>
             <Grid container spacing={2} maxWidth={600}>
                 <Grid item xs={6} sm={4}>
                     <TextField
@@ -183,9 +155,8 @@ const WaterAnalysisFilters = () => {
                     />
                 </Grid>
             </Grid>
-        </Popover>
-        </>
+        </Paper>
     )
 }
 
-export default WaterAnalysisFilters
+export default WaterAnalysisFilterPanel
