@@ -9,13 +9,14 @@ import RenderUserTag from "../input/AutocompleteInput/RenderUserTag"
 import {useSearchParams} from "react-router-dom"
 import {useSelector} from "react-redux"
 import {createParamsObject, createIDsValue} from "../../utils/helpers"
+import { linesSelector } from "../../store/selectors"
 
 const PhChAnalysesFilterPanel = () => {
 
     const [ params, setParams ] = useSearchParams()
 
     const products = useSelector(state => state.products.data)
-    const lines = useSelector(state => state.lines.data)
+    const { data: lines } = useSelector(linesSelector)
     const formats = useSelector(state => state.formats.data)
     const containerSuppliers = useSelector(state => state.containerSuppliers.data)
     const caps = useSelector(state => state.caps.data)

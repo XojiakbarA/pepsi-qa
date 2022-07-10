@@ -6,8 +6,8 @@ import { useSelector } from "react-redux"
 
 const PhysicalChemicalAnalyses = () => {
 
-    const carbonatedProducts = useSelector(state => state.products.data.filter(product => product.carbonated))
-    const nonCarbonatedProducts = useSelector(state => state.products.data.filter(product => !product.carbonated))
+    const carbonatedProducts = useSelector(state => state.products.data.filter(product => product.is_carbonated))
+    const nonCarbonatedProducts = useSelector(state => state.products.data.filter(product => !product.is_carbonated))
 
     return (
         <Grid container spacing={2}>
