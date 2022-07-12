@@ -39,7 +39,7 @@ const MyGridToolbar = ({ analysis }) => {
                 </Stack>
                 <Stack direction="row" alignItems="center" spacing={1}>
                     <Typography variant="body2">Checked At:</Typography>
-                    <Typography variant="body2" color="primary">{analysis.checked_at}</Typography>
+                    <Typography variant="body2" color="primary">{new Date(analysis.checked_at).toLocaleString()}</Typography>
                 </Stack>
                 {
                     analysis.target &&

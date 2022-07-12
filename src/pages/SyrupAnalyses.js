@@ -85,7 +85,7 @@ const SyrupAnalyses = () => {
                     <IconButton
                         size="small"
                         color="primary"
-                        onClick={ e => handleMoreClick(e.currentTarget, {id: row.id, carbonated: row.carbonated}) }
+                        onClick={ e => handleMoreClick(e.currentTarget, row) }
                     >
                         <MoreVertIcon color="inherit" fontSize="inherit"/>
                     </IconButton>
@@ -175,6 +175,7 @@ const SyrupAnalyses = () => {
             minWidth: 80,
             field: 'checked_at',
             headerName: 'Checked At',
+            valueGetter: ({ row }) => new Date(row.checked_at).toLocaleString(),
             renderCell: ({ value, colDef }) => (
                 <GridCellExpand value={value} width={colDef.computedWidth}/>
             )

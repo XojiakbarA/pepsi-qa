@@ -80,7 +80,8 @@ const columns = [
         flex: 1.5,
         minWidth: 80,
         field: 'checked_at',
-        headerName: 'Checked At'
+        headerName: 'Checked At',
+        valueGetter: ({ row }) => new Date(row.checked_at).toLocaleString()
     },
 ]
 
