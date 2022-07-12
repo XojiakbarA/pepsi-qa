@@ -30,8 +30,8 @@ const LineCard = ({ line }) => {
                 <Stack direction="row" alignItems="center" spacing={2}>
                     <img src={baseURL + line.logo} alt="line-logo" height={line.name === 'KHS' ? 20 : 30}/>
                     <Stack>
-                        <Typography variant="h6">{`${line.name} ${line.container_name}`}</Typography>
-                        <Typography variant="body2">{line.speed}</Typography>
+                        <Typography variant="h6">{`${line.name} ${line.container_name} ${line.speed}`}</Typography>
+                        <Typography variant="body2">{`(${line.factory_name})`}</Typography>
                     </Stack>
                     <Box flexGrow={1}/>
                     <Stack>
@@ -47,8 +47,8 @@ const LineCard = ({ line }) => {
                     <Table size="small">
                         <TableBody>
                             <TableRow ref={ref}>
-                                <TableCell>Factory</TableCell>
-                                <TableCell>{line.factory_name}</TableCell>
+                                <TableCell>Status</TableCell>
+                                <TableCell>{line.status}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Product</TableCell>
