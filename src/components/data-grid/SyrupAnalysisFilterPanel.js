@@ -8,6 +8,7 @@ import RenderUserTag from "../input/AutocompleteInput/RenderUserTag"
 import {useSelector} from "react-redux"
 import {useSearchParams} from "react-router-dom"
 import {createIDsValue, createParamsObject, createRangeValue} from "../../utils/helpers"
+import { usersSelector } from "../../store/selectors"
 
 const SyrupAnalysisFilterPanel = () => {
 
@@ -15,7 +16,7 @@ const SyrupAnalysisFilterPanel = () => {
 
     const products = useSelector(state => state.products.data)
     const tanks = useSelector(state => state.tanks.data)
-    const users = useSelector(state => state.users.data)
+    const { data: users } = useSelector(usersSelector)
 
     const productValue = createIDsValue('product_ids', products, params)
     const tankValue = createIDsValue('tank_ids', tanks, params)

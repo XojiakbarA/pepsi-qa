@@ -15,7 +15,7 @@ export const shiftsSlice = createSlice({
     reducers: {
         setShiftValues: (state, { payload }) => {
             const shift = state.data.find(shift => shift.id === payload.id)
-            shift.shift_values[payload.index] = payload.value
+            shift.shift_values[payload.index]['value'] = payload.value
         }
     },
     extraReducers: builder => {

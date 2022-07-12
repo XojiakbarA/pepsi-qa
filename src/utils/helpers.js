@@ -1,6 +1,8 @@
 import LightModeIcon from "@mui/icons-material/LightMode"
 import DarkModeIcon from "@mui/icons-material/DarkMode"
 import HomeIcon from "@mui/icons-material/Home"
+import WeekendIcon from "@mui/icons-material/Weekend"
+import HotelIcon from "@mui/icons-material/Hotel"
 
 export const createParamsObject = (params) => {
     const obj = {}
@@ -50,4 +52,23 @@ export const toUpperCaseFirstLetters = (string) => {
         if (arr.includes(i)) return item.toUpperCase()
         return item
     }).join('')
+}
+
+export const setColor = (value) => {
+    switch (value) {
+        case 'day': return 'warning'
+        case 'night': return 'info'
+        case 'leave': return 'secondary'
+        case 'sick_leave': return 'error'
+        default: return 'default'
+    }
+}
+export const setIcon = (value) => {
+    switch (value) {
+        case 'day': return <LightModeIcon color="inherit" fontSize="inherit"/>
+        case 'night': return <DarkModeIcon color="inherit" fontSize="inherit"/>
+        case 'leave': return <WeekendIcon color="inherit" fontSize="inherit"/>
+        case 'sick_leave': return <HotelIcon color="inherit" fontSize="inherit"/>
+        default: return <HomeIcon color="inherit" fontSize="inherit"/>
+    }
 }

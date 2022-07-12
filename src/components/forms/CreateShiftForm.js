@@ -9,12 +9,13 @@ import {useFormik} from "formik"
 import {createShift} from "../../store/actionCreators"
 import {createShiftValidationSchema} from "../../utils/validate"
 import {createShiftButtons} from "../../utils/helpers"
+import { usersSelector } from "../../store/selectors"
 
 const CreateShiftForm = ({ date, handleClose }) => {
 
     const dispatch = useDispatch()
 
-    const users = useSelector(state => state.users.data)
+    const { data: users } = useSelector(usersSelector)
     const factories = useSelector(state => state.factories.data)
     const shiftModes = useSelector(state => state.shiftModes.data)
     const {data: shifts, createLoading} = useSelector(state => state.shifts)
@@ -72,7 +73,7 @@ const CreateShiftForm = ({ date, handleClose }) => {
                 <RadioInput
                     row
                     label="Shift Mode"
-                    radios={shiftModes.map(({ id, value }) => ({ id, value, label: value }))}
+                    radios={shiftModes.map(({ id, type }) => ({ id, value: type, label: type }))}
                     error={ touched.shift_mode_id && Boolean(errors.shift_mode_id) }
                     helperText={ touched.shift_mode_id && errors.shift_mode_id }
                     { ...getFieldProps('shift_mode_id') }

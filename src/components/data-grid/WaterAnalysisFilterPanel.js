@@ -6,12 +6,13 @@ import RenderUserTag from "../input/AutocompleteInput/RenderUserTag"
 import {useSearchParams} from "react-router-dom"
 import {useSelector} from "react-redux"
 import {createParamsObject, createRangeValue, createIDsValue} from "../../utils/helpers"
+import { usersSelector } from "../../store/selectors"
 
 const WaterAnalysisFilterPanel = () => {
 
     const [params, setParams] = useSearchParams()
 
-    const users = useSelector(state => state.users.data)
+    const { data: users } = useSelector(usersSelector)
 
     const userValue = createIDsValue('user_ids', users, params)
     const hardnessValue = createRangeValue(params, 'hardness')

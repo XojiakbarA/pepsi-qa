@@ -12,7 +12,7 @@ import {useState} from "react"
 import {useSearchParams} from "react-router-dom"
 import {useSelector} from "react-redux"
 import {createParamsObject, createIDsValue} from "../../utils/helpers"
-import { linesSelector } from "../../store/selectors"
+import { linesSelector, usersSelector } from "../../store/selectors"
 
 const ProductAnalysisFilters = () => {
 
@@ -27,7 +27,7 @@ const ProductAnalysisFilters = () => {
     const formats = useSelector(state => state.formats.data)
     const containerSuppliers = useSelector(state => state.containerSuppliers.data)
     const caps = useSelector(state => state.caps.data)
-    const users = useSelector(state => state.users.data)
+    const { data: users } = useSelector(usersSelector)
 
     const productValue = createIDsValue('product_ids', products, params)
     const lineValue = createIDsValue('line_ids', lines, params)

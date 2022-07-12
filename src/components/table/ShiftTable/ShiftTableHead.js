@@ -27,8 +27,7 @@ const ShiftTableHead = ({ monthDays, getDayName }) => {
                         minWidth: isDownSm ? 130 : 220,
                         position: 'sticky',
                         left: 0,
-                        backgroundColor:
-                        'white',
+                        backgroundColor: 'white',
                         zIndex: 1
                     }}
                 >

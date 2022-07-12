@@ -16,13 +16,13 @@ const ShiftTable = ({ shifts, loading }) => {
     const [params] = useSearchParams()
 
     const [anchorEl, setAnchorEl] = useState(null)
-    const [shift, setShift] = useState({ id: null, index: null, value: null })
+    const [shift, setShift] = useState({ id: null, index: null, value: null, shiftModeValues: null })
     const [editShifts, setEditShifts] = useState([])
 
     const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
-    const handleShiftClick = (e, id, index) => {
-        setShift({ id, index, value: null })
+    const handleShiftClick = (e, id, index, value, shiftModeValues) => {
+        setShift({ id, index, value, shiftModeValues })
         setAnchorEl(e.currentTarget)
     }
     const handlePopoverClick = (value) => {
@@ -45,8 +45,6 @@ const ShiftTable = ({ shifts, loading }) => {
         setAnchorEl(null)
     }
 
-    const shiftValue = shifts.find(item => item.id === shift.id)?.shift_values[shift.index]
-
     const date = params.get('date') ? new Date(params.get('date')) : new Date()
     const year = date.getFullYear()
     const month = date.getMonth()
@@ -59,7 +57,7 @@ const ShiftTable = ({ shifts, loading }) => {
     const getMonthName = (month, date) => new Intl.DateTimeFormat('en-US', { month }).format(date)
 
     return (
-        <Paper sx={{ mb: 2 }}>
+        <Paper sx={{ mb: 2, height: 550, overflow: 'scroll' }}>
             <ShiftTableToolbar
                 date={date}
                 minDate={minDate}
@@ -69,7 +67,7 @@ const ShiftTable = ({ shifts, loading }) => {
                 setEditShifts={setEditShifts}
             />
             { loading && <LinearProgress/> }
-            <TableContainer sx={{ minHeight: 500 }}>
+            <TableContainer>
                 <Table size={isDownSm ? 'small' : 'medium'}>
                     <ShiftTableHead
                         monthDays={monthDays}
@@ -86,8 +84,7 @@ const ShiftTable = ({ shifts, loading }) => {
                                         minWidth: isDownSm ? 130 : 220,
                                         position: 'sticky',
                                         left: 0,
-                                        backgroundColor:
-                                        'white',
+                                        backgroundColor: 'white',
                                         zIndex: 1
                                     }}
                                 >
@@ -97,12 +94,12 @@ const ShiftTable = ({ shifts, loading }) => {
                                     <Typography variant="caption">{shift.factory_name}</Typography>
                                 </TableCell>
                                 {
-                                    shift.shift_values.map((value, i) => (
+                                    shift.shift_values.map((shift_value, i) => (
                                         <ShiftTableCell
                                             disabled={loading}
                                             key={i}
-                                            value={value}
-                                            onClick={ e => handleShiftClick(e, shift.id, i, value) }
+                                            value={shift_value.value}
+                                            onClick={ e => handleShiftClick(e, shift.id, i, shift_value.value, shift.shift_mode_values) }
                                         />
                                     ))
                                 }
@@ -128,7 +125,8 @@ const ShiftTable = ({ shifts, loading }) => {
                 anchorEl={anchorEl}
                 onClose={ e => setAnchorEl(null) }
                 onClick={handlePopoverClick}
-                shiftValue={shiftValue}
+                clickedValue={shift.value}
+                shiftModeValues={shift.shiftModeValues}
             />
         </Paper>
     )

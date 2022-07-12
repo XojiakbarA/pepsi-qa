@@ -11,7 +11,7 @@ const SyrupMorePopover = ({ anchorEl, syrup, onClose }) => {
     const menu = [
         {
             title: 'Physical-Chemical Analyses',
-            path: `/physical-chemical-analyses/${syrup?.carbonated ? 'carbonated-drinks' : 'non-carbonated-drinks'}`,
+            path: `/physical-chemical-analyses/${syrup?.is_carbonated ? 'carbonated-drinks' : 'non-carbonated-drinks'}`,
             icon: <ChemicalIcon/>
         },
         { title: 'Removal Torque Analyses', path: '/removal-torque-analyses', icon: <CapIcon/> },
