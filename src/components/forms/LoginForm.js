@@ -1,4 +1,4 @@
-import {Checkbox, FormControlLabel, Stack, TextField} from "@mui/material"
+import {Checkbox, FormControlLabel, FormHelperText, Stack, TextField} from "@mui/material"
 import {LoadingButton} from "@mui/lab"
 import PasswordInput from "../input/PasswordInput"
 import {useFormik} from "formik"
@@ -13,7 +13,7 @@ const LoginForm = () => {
 
     const { loading } = useSelector(userSelector)
 
-    const { handleSubmit, handleChange, handleBlur, getFieldProps, values, errors, touched } = useFormik({
+    const { handleSubmit, getFieldProps, errors, touched } = useFormik({
         initialValues: {
             email: "",
             password: "",
@@ -21,8 +21,8 @@ const LoginForm = () => {
         },
         enableReinitialize: true,
         validationSchema: loginValidationSchema,
-        onSubmit: (data) => {
-            dispatch(login(data))
+        onSubmit: (data, { setErrors }) => {
+            dispatch(login({data, setErrors}))
         }
     })
 
@@ -38,13 +38,11 @@ const LoginForm = () => {
                 />
                 <PasswordInput
                     label="Password"
-                    name="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                     error={ touched.password && Boolean(errors.password) }
                     helperText={ touched.password && errors.password }
+                    { ...getFieldProps('password') }
                 />
+                <FormHelperText error>{ errors.server }</FormHelperText>
                 <FormControlLabel
                     label="Remember Me"
                     control={<Checkbox { ...getFieldProps('remember') }/>}

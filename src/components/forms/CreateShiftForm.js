@@ -30,8 +30,8 @@ const CreateShiftForm = ({ date, handleClose }) => {
         },
         enableReinitialize: true,
         validationSchema: createShiftValidationSchema,
-        onSubmit: (data, { setFieldError }) => {
-            dispatch(createShift({ data, setFieldError, handleClose }))
+        onSubmit: (data, { setErrors }) => {
+            dispatch(createShift({ data, setErrors, handleClose }))
         }
     })
 

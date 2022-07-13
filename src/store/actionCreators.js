@@ -3,7 +3,7 @@ import {fetchCaps, fetchContainerSuppliers, fetchCsrfCookie, fetchFactories, fet
 import {setSnackbar} from "./slices/snackbarSlice"
 
 export const getUser = createAsyncThunk('user/getUser',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const res = await fetchUser()
             if (res.status === 200) {
@@ -13,14 +13,18 @@ export const getUser = createAsyncThunk('user/getUser',
         } catch ({response}) {
             if (response.status === 401) {
                 localStorage.removeItem('auth')
-                return rejectWithValue(response.data.message)
             }
+            if (response.status === 500) {
+                localStorage.removeItem('auth')
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
+            return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const register = createAsyncThunk('user/register',
-    async (data, { dispatch, rejectWithValue }) => {
+    async ({ data, setErrors }, { dispatch, rejectWithValue }) => {
         try {
             const cookie = await fetchCsrfCookie()
             if (cookie.status === 204) {
@@ -35,13 +39,19 @@ export const register = createAsyncThunk('user/register',
                 }
             }
         } catch ({ response }) {
+            if (response.status === 422) {
+                setErrors(response.data.errors)
+            }
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const login = createAsyncThunk('user/login',
-    async (data, { dispatch, rejectWithValue }) => {
+    async ({ data, setErrors }, { dispatch, rejectWithValue }) => {
         try {
             const cookie = await fetchCsrfCookie()
             if (cookie.status === 204) {
@@ -56,6 +66,12 @@ export const login = createAsyncThunk('user/login',
                 }
             }
         } catch ({ response }) {
+            if (response.status === 422) {
+                setErrors(response.data.errors)
+            }
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
@@ -71,122 +87,152 @@ export const logout = createAsyncThunk('user/logout',
                 return null
             }
         } catch ({ response }) {
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const getProducts = createAsyncThunk('products/get',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const res = await fetchProducts()
             if (res.status === 200) {
                 return res.data.data
             }
         } catch ({ response }) {
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const getLines = createAsyncThunk('lines/get',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const res = await fetchLines()
             if (res.status === 200) {
                 return res.data.data
             }
         } catch ({ response }) {
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const getFormats = createAsyncThunk('formats/get',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const res = await fetchFormats()
             if (res.status === 200) {
                 return res.data.data
             }
         } catch ({ response }) {
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const getContainerSuppliers = createAsyncThunk('containerSupplier/get',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const res = await fetchContainerSuppliers()
             if (res.status === 200) {
                 return res.data.data
             }
         } catch ({ response }) {
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
 )
 export const getCaps = createAsyncThunk('caps/get',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const res = await fetchCaps()
             if (res.status === 200) {
                 return res.data.data
             }
         } catch ({ response }) {
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const getUsers = createAsyncThunk('users/get',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const res = await fetchUsers()
             if (res.status === 200) {
                 return res.data.data
             }
         } catch ({ response }) {
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const getTanks = createAsyncThunk('tanks/get',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const res = await fetchTanks()
             if (res.status === 200) {
                 return res.data.data
             }
         } catch ({ response }) {
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const getShiftModes = createAsyncThunk('shiftModes/get',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const res = await fetchShiftModes()
             if (res.status === 200) {
                 return res.data.data
             }
         } catch ({ response }) {
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const getFactories = createAsyncThunk('factories/get',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
         try {
             const res = await fetchFactories()
             if (res.status === 200) {
                 return res.data.data
             }
         } catch ({ response }) {
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
@@ -200,14 +246,19 @@ export const getShifts = createAsyncThunk('shifts/get',
                 return res.data.data
             }
         } catch ({ response }) {
-            dispatch(setSnackbar({ data: response.data.message, open: true, color: 'error' }))
+            if (response.status === 422) {
+                dispatch(setSnackbar({ data: response.data.message, open: true, color: 'error' }))
+            }
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }
 )
 
 export const createShift = createAsyncThunk('shifts/create',
-    async ({ data, setFieldError, handleClose }, { dispatch, rejectWithValue }) => {
+    async ({ data, setErrors, handleClose }, { dispatch, rejectWithValue }) => {
         try {
             const res = await storeShift(data)
             if (res.status === 201) {
@@ -216,10 +267,11 @@ export const createShift = createAsyncThunk('shifts/create',
                 return res.data.data
             }
         } catch ({ response }) {
-            dispatch(setSnackbar({ data: response.data.message, open: true, color: 'error' }))
             if (response.status === 422) {
-                const errors = Object.entries(response.data.errors)
-                errors.forEach(item => setFieldError(item[0], item[1][0]))
+                setErrors(response.data.errors)
+            }
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
             }
             return rejectWithValue(response.data.message)
         }
@@ -235,7 +287,12 @@ export const editShiftValues = createAsyncThunk('shifts/editValues',
                 dispatch(setSnackbar({ data: 'Shifts updated successfully!', open: true, color: 'success' }))
             }
         } catch ({ response }) {
-            dispatch(setSnackbar({ data: response.data.message, open: true, color: 'error' }))
+            if (response.status === 422) {
+                dispatch(setSnackbar({ data: response.data.message, open: true, color: 'error' }))
+            }
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
             return rejectWithValue(response.data.message)
         }
     }

@@ -23,8 +23,8 @@ const RegisterForm = () => {
         },
         enableReinitialize: true,
         validationSchema: registerValidationSchema,
-        onSubmit: (data) => {
-            dispatch(register(data))
+        onSubmit: (data, { setErrors }) => {
+            dispatch(register({data, setErrors}))
         }
     })
 
