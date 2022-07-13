@@ -1,44 +1,68 @@
-import {Box, LinearProgress, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, useMediaQuery} from "@mui/material"
+import {Box, LinearProgress, Paper, Table, TableBody, TableContainer, useMediaQuery} from "@mui/material"
 import ShiftTableHead from "./ShiftTableHead"
-import ShiftTableCell from "./ShiftTableCell"
 import ShiftTableToolbar from "./ShiftTableToolbar"
 import ShiftTablePopover from "./ShiftTablePopover"
+import ShiftTableRow from "./ShiftTableRow"
 import NoResults from "../../common/NoResults"
+import ConfirmDialog from "../../dialog/ConfirmDialog"
 import {useSearchParams} from "react-router-dom"
-import {useState} from "react"
-import {useDispatch} from "react-redux"
+import {useEffect, useState} from "react"
+import {useDispatch, useSelector} from "react-redux"
 import { setShiftValues } from "../../../store/slices/shiftsSlice"
+import { deleteShift, getShifts } from "../../../store/actionCreators"
+import { shiftsSelector } from "../../../store/selectors"
+import { createParamsObject } from "../../../utils/helpers"
 
-const ShiftTable = ({ shifts, loading }) => {
+const ShiftTable = () => {
 
     const dispatch = useDispatch()
 
     const [params] = useSearchParams()
 
+    const { data: shifts, loading, deleteLoading } = useSelector(shiftsSelector)
+
+    useEffect(() => {
+        dispatch(getShifts(createParamsObject(params)))
+    }, [dispatch, params])
+
     const [anchorEl, setAnchorEl] = useState(null)
-    const [shift, setShift] = useState({ id: null, index: null, value: null, shiftModeValues: null })
+    const [dialogOpen, setDialogOpen] = useState(false)
+    const [clickedShift, setClickedShift] = useState({ shift: null, index: null, value: null })
     const [editShifts, setEditShifts] = useState([])
 
     const isDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
-    const handleShiftClick = (e, id, index, value, shiftModeValues) => {
-        setShift({ id, index, value, shiftModeValues })
+    const handleDeleteClick = (shift) => {
+        setClickedShift({ shift, index: null, value: null })
+        setDialogOpen(true)
+    }
+    const handleCancelClick = () => {
+        setDialogOpen(false)
+    }
+    const handleConfirmClick = () => {
+        dispatch(deleteShift({ id: clickedShift.shift.id, handleClose: handleCancelClick }))
+    }
+    const handleShiftClick = (e, shift, index, value) => {
+        setClickedShift({ shift, index, value })
         setAnchorEl(e.currentTarget)
     }
+    const handlePopoverClose = () => {
+        setAnchorEl(null)
+    }
     const handlePopoverClick = (value) => {
-        dispatch(setShiftValues({ ...shift, value }))
+        dispatch(setShiftValues({ id: clickedShift.shift.id, index: clickedShift.index, value }))
         setEditShifts(prev => {
             const editShifts = JSON.parse(JSON.stringify(prev))
-            const editShift = editShifts.find(item => item.id === shift.id)
+            const editShift = editShifts.find(item => item.id === clickedShift.shift.id)
             if (editShift) {
-                const editShiftValue = editShift.values.find(item => item.index === shift.index)
+                const editShiftValue = editShift.values.find(item => item.index === clickedShift.index)
                 if (editShiftValue) {
                     editShiftValue.value = value
                 } else {
-                    editShift.values.push({ index: shift.index, value })
+                    editShift.values.push({ index: clickedShift.index, value })
                 }
             } else {
-                editShifts.push({ id: shift.id, values: [{ index: shift.index, value }] })
+                editShifts.push({ id: clickedShift.shift.id, values: [{ index: clickedShift.index, value }] })
             }
             return editShifts
         })
@@ -78,55 +102,42 @@ const ShiftTable = ({ shifts, loading }) => {
                         !!shifts.length
                         &&
                         shifts.map(shift => (
-                            <TableRow key={shift.id}>
-                                <TableCell
-                                    sx={{
-                                        minWidth: isDownSm ? 130 : 220,
-                                        position: 'sticky',
-                                        left: 0,
-                                        backgroundColor: 'white',
-                                        zIndex: 1
-                                    }}
-                                >
-                                    {shift.user_name}
-                                </TableCell>
-                                <TableCell>
-                                    <Typography variant="caption">{shift.factory_name}</Typography>
-                                </TableCell>
-                                {
-                                    shift.shift_values.map((shift_value, i) => (
-                                        <ShiftTableCell
-                                            disabled={loading}
-                                            key={i}
-                                            value={shift_value.value}
-                                            onClick={ e => handleShiftClick(e, shift.id, i, shift_value.value, shift.shift_mode_values) }
-                                        />
-                                    ))
-                                }
-                            </TableRow>
+                            <ShiftTableRow
+                                key={shift.id}
+                                shift={shift}
+                                handleDeleteClick={handleDeleteClick}
+                                handleShiftClick={handleShiftClick}
+                            />
                         ))
                     }
                     </TableBody>
-            </Table>
-            {
-                !shifts.length
-                &&
-                <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    paddingTop={10}
-                >
-                    <NoResults resource="Shifts"/>
-                </Box>
-            }
-        </TableContainer>
+                </Table>
+                {
+                    !shifts.length
+                    &&
+                    <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        paddingTop={10}
+                    >
+                        <NoResults resource="Shifts"/>
+                    </Box>
+                }
+            </TableContainer>
             <ShiftTablePopover
                 anchorEl={anchorEl}
-                onClose={ e => setAnchorEl(null) }
+                onClose={handlePopoverClose}
                 onClick={handlePopoverClick}
-                clickedValue={shift.value}
-                shiftModeValues={shift.shiftModeValues}
+                clickedValue={clickedShift.value}
+                shiftModeValues={clickedShift.shift?.shift_mode_values}
+            />
+            <ConfirmDialog
+                open={dialogOpen}
+                content={`Do you really want to delete ${clickedShift.shift?.user_name}'s shift?`}
+                loading={deleteLoading}
+                handleCancelClick={handleCancelClick}
+                handleConfirmClick={handleConfirmClick}
             />
         </Paper>
     )

@@ -87,6 +87,10 @@ export const storeShift = async (data) => {
     return await instance.post('api/shifts', data)
 }
 
+export const destroyShift = async (id) => {
+    return await instance.delete(`api/shifts/${id}`)
+}
+
 export const updateShiftValues = async (data) => {
     return await instance.put('api/shifts', data)
 }

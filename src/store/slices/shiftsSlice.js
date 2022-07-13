@@ -1,11 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit"
-import {createShift, editShiftValues, getShifts} from "../actionCreators"
+import {createShift, deleteShift, editShiftValues, getShifts} from "../actionCreators"
 
 const initialState = {
     data: [],
     loading: false,
     createLoading: false,
     updateValueLoading: false,
+    deleteLoading: false,
     error: null,
 }
 
@@ -52,6 +53,18 @@ export const shiftsSlice = createSlice({
         builder.addCase(editShiftValues.rejected, (state, action) => {
             state.error = action.payload
             state.updateValueLoading = false
+        })
+
+        builder.addCase(deleteShift.pending, (state) => {
+            state.deleteLoading = true
+        })
+        builder.addCase(deleteShift.fulfilled, (state, action) => {
+            state.data = state.data.filter(item => item.id !== action.payload.id)
+            state.deleteLoading = false
+        })
+        builder.addCase(deleteShift.rejected, (state, action) => {
+            state.error = action.payload
+            state.deleteLoading = false
         })
     }
 })

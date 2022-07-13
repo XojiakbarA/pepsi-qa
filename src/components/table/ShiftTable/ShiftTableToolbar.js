@@ -11,7 +11,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {createIDsValue, createParamsObject} from "../../../utils/helpers"
 import { editShiftValues } from "../../../store/actionCreators"
 import { LoadingButton } from "@mui/lab"
-import { usersSelector } from "../../../store/selectors"
+import { shiftsSelector, usersSelector } from "../../../store/selectors"
 
 const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName, editShifts, setEditShifts }) => {
 
@@ -23,7 +23,7 @@ const ShiftTableToolbar = ({ date, minDate, maxDate, getMonthName, editShifts, s
 
     const [params, setParams] = useSearchParams()
 
-    const { loading, updateValueLoading } = useSelector(state => state.shifts)
+    const { loading, updateValueLoading } = useSelector(shiftsSelector)
     const { data: users } = useSelector(usersSelector)
 
     const userValue = createIDsValue('user_ids', users, params)

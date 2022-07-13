@@ -33,6 +33,7 @@ const ShiftTableHead = ({ monthDays, getDayName }) => {
                 >
                     Employees
                 </TableCell>
+                <TableCell rowSpan={3} sx={{ writingMode: 'vertical-lr' }}>Shift Mode</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell sx={{ whiteSpace: 'nowrap' }}>

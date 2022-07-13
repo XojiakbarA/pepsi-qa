@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
-import {fetchCaps, fetchContainerSuppliers, fetchCsrfCookie, fetchFactories, fetchFormats, fetchLines, fetchProducts, fetchShiftModes, fetchShifts, fetchTanks, fetchUser, fetchUsers, storeShift, updateShiftValues, userLogin, userLogout, userRegister} from "../api"
+import {destroyShift, fetchCaps, fetchContainerSuppliers, fetchCsrfCookie, fetchFactories, fetchFormats, fetchLines, fetchProducts, fetchShiftModes, fetchShifts, fetchTanks, fetchUser, fetchUsers, storeShift, updateShiftValues, userLogin, userLogout, userRegister} from "../api"
 import {setSnackbar} from "./slices/snackbarSlice"
 
 export const getUser = createAsyncThunk('user/getUser',
@@ -290,6 +290,24 @@ export const editShiftValues = createAsyncThunk('shifts/editValues',
             if (response.status === 422) {
                 dispatch(setSnackbar({ data: response.data.message, open: true, color: 'error' }))
             }
+            if (response.status === 500) {
+                dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
+            }
+            return rejectWithValue(response.data.message)
+        }
+    }
+)
+
+export const deleteShift = createAsyncThunk('shifts/delete',
+    async ({ id, handleClose }, { dispatch, rejectWithValue }) => {
+        try {
+            const res = await destroyShift(id)
+            if (res.status === 204) {
+                handleClose()
+                dispatch(setSnackbar({ data: 'Shift deleted successfully!', open: true, color: 'success' }))
+                return { id }
+            }
+        } catch ({ response }) {
             if (response.status === 500) {
                 dispatch(setSnackbar({ data: 'Server Error', open: true, color: 'error' }))
             }

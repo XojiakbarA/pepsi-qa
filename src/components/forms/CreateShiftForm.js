@@ -9,7 +9,7 @@ import {useFormik} from "formik"
 import {createShift} from "../../store/actionCreators"
 import {createShiftValidationSchema} from "../../utils/validate"
 import {createShiftButtons} from "../../utils/helpers"
-import { usersSelector } from "../../store/selectors"
+import { shiftsSelector, usersSelector } from "../../store/selectors"
 
 const CreateShiftForm = ({ date, handleClose }) => {
 
@@ -18,7 +18,7 @@ const CreateShiftForm = ({ date, handleClose }) => {
     const { data: users } = useSelector(usersSelector)
     const factories = useSelector(state => state.factories.data)
     const shiftModes = useSelector(state => state.shiftModes.data)
-    const {data: shifts, createLoading} = useSelector(state => state.shifts)
+    const {data: shifts, createLoading} = useSelector(shiftsSelector)
 
     const { handleSubmit, handleBlur, getFieldProps, setValues, values, touched, errors } = useFormik({
         initialValues: {
